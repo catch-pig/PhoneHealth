@@ -34,7 +34,7 @@ public class EnCodingUtils {
     public Context mcontext;
     public static Key desKey = null;
 
-    public static EnCodingUtils getInstance(Context context){
+    public static EnCodingUtils getInstance(){
         return EnCodingUtilsHolder.instance;
     }
 
@@ -49,7 +49,7 @@ public class EnCodingUtils {
                     case DES_MODE:
                         byte keybytes[] = null;
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            List<PublicKey> publicKeyList = RoomUtils.InitDataBase(PhoneHealthApp.sApplication).keyDao().findKeyWithMode(encodeMode);
+                            List<PublicKey> publicKeyList = RoomUtils.getDataBase(PhoneHealthApp.sApplication).keyDao().findKeyWithMode(encodeMode);
                            if (publicKeyList!=null||publicKeyList.size()!=0) {
                                Log.i("PHoneHealthAPP", "get database  strKey= " +publicKeyList.get(0).getKeyValue());
                                keybytes = Base64.getDecoder().decode(publicKeyList.get(0).getKeyValue());
@@ -66,7 +66,7 @@ public class EnCodingUtils {
                                     PublicKey publicKey = new PublicKey();
                                     publicKey.setKeyValue(strKey);
                                     publicKey.setKeyMode(encodeMode);
-                                    RoomUtils.InitDataBase(PhoneHealthApp.sApplication).keyDao().insertKeys(publicKey);
+                                    RoomUtils.getDataBase(PhoneHealthApp.sApplication).keyDao().insertKeys(publicKey);
                                     Log.i("PHoneHealthAPP","insert database  strKey= "+strKey);
                                 }
                             }
