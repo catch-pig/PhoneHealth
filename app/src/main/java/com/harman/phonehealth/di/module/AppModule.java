@@ -2,6 +2,9 @@ package com.harman.phonehealth.di.module;
 
 import android.app.Application;
 
+import com.harman.phonehealth.common.UsageModel;
+import com.harman.phonehealth.common.impl.UsageModelImpl;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -17,5 +20,11 @@ public class AppModule {
     @Provides
     public Application providesApplication(){
         return mApplication;
+    }
+
+    @Singleton
+    @Provides
+    public UsageModel providesUsageModel(){
+        return new UsageModelImpl(mApplication);
     }
 }

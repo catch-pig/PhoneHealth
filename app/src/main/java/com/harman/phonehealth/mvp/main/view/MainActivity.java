@@ -1,5 +1,10 @@
 package com.harman.phonehealth.mvp.main.view;
 
+import android.app.AppOpsManager;
+import android.content.Context;
+import android.content.Intent;
+import android.provider.Settings;
+
 import com.harman.phonehealth.R;
 import com.harman.phonehealth.app.PhoneHealthApp;
 import com.harman.phonehealth.base.BasePresenterActivity;
@@ -21,11 +26,27 @@ public class MainActivity extends BasePresenterActivity<MainContract.Presenter> 
 
     @Override
     protected void initView() {
-
+        checkUsagePermission();
     }
 
     @Override
     protected int layoutId() {
+
         return R.layout.activity_main;
     }
+    private boolean checkUsagePermission() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            AppOpsManager appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+            int mode = 0;
+            mode = appOps.checkOpNoThrow("android:get_usage_stats", android.os.Process.myUid(), getPackageName());
+            boolean granted = mode == AppOpsManager.MODE_ALLOWED;
+            if (!granted) {
+                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                startActivityForResult(intent, 1);
+                return false;
+            }
+        }
+        return true;
+    }
 }
+
