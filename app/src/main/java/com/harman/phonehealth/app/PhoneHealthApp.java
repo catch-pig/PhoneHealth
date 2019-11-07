@@ -11,6 +11,7 @@ import com.harman.phonehealth.util.EnCodingUtils;
 public class PhoneHealthApp extends Application {
 
     public static Application sApplication;
+    private static AppComponent sAppComponent;
 
     @Override
     public void onCreate() {
@@ -20,7 +21,10 @@ public class PhoneHealthApp extends Application {
     }
 
     public static AppComponent getAppComponent(){
-        return DaggerAppComponent.builder().appModule(new AppModule(sApplication)).build();
+        if (sAppComponent == null) {
+            sAppComponent = DaggerAppComponent.builder().appModule(new AppModule(sApplication)).build();
+        }
+        return sAppComponent;
     }
 
     public void testDES(){
