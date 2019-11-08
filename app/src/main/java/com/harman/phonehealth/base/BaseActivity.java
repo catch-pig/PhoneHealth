@@ -25,6 +25,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         finish();
     }
 
+    @Override
+    public BaseActivity getBaseActivity() {
+        return this;
+    }
+
     @CallSuper
     @Override
     protected void onDestroy() {
