@@ -11,6 +11,6 @@ public interface UsageModel {
 
     List<PackageInfoBean> getSevenDayData();
 
-    List<PackageInfoBean> getOneDayData(String date) throws Exception;
+    List<PackageInfoBean> getOneDayData(String date);
 
 }

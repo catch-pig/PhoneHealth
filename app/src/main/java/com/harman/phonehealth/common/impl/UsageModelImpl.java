@@ -33,13 +33,13 @@ public class UsageModelImpl implements UsageModel {
     }
 
     @Override
-    public List<PackageInfoBean> getOneDayData(String date) throws Exception {
+    public List<PackageInfoBean> getOneDayData(String date){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         long startTime;
         try {
             startTime = dateFormat.parse(date).getTime();
             if (startTime > System.currentTimeMillis()){
-                throw new Exception("Time can not after today");
+                throw new IllegalStateException("Time can not after today");
             }
         } catch (ParseException e) {
             e.printStackTrace();
