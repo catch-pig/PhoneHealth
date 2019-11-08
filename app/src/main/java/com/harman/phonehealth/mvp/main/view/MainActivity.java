@@ -42,20 +42,20 @@ public class MainActivity extends BasePresenterActivity<MainContract.Presenter> 
     @Override
     protected void initView() {
         if (!PermissionUtils.checkUsagePermission(this)) {
-            builder = new AlertDialog.Builder(this).setTitle("权限申请")
-                    .setMessage("App需要“有权查看使用情况”权限").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            builder = new AlertDialog.Builder(this).setTitle("Request Permission")
+                    .setMessage("The application needs Usage State Permission").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                             startActivityForResult(intent, REQUEST_USAGE_ACCESS);
                         }
-                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(MainActivity.this, "请重新打开App授权", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "Please reopen the application to request permission", Toast.LENGTH_LONG).show();
                             dialogInterface.dismiss();
                         }
-                    });
+                    }).setCancelable(false);
             builder.create().show();
         }
     }
@@ -77,7 +77,7 @@ public class MainActivity extends BasePresenterActivity<MainContract.Presenter> 
         switch (requestCode) {
             case REQUEST_USAGE_ACCESS:
                 if (!PermissionUtils.checkUsagePermission(this)) {
-                    Toast.makeText(this, "请重新打开App授权", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please reopen the application to request permission", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

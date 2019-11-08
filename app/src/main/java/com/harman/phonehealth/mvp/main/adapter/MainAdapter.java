@@ -19,8 +19,8 @@ public class MainAdapter extends FragmentStatePagerAdapter {
         super(fm);
         mFragmentList.add(TodayFragment.getInstance());
         mFragmentList.add(SevenDayFragment.getInstance());
-        mTitle.add("今天");
-        mTitle.add("过去七天");
+        mTitle.add("Today");
+        mTitle.add("Last 7 Days");
     }
 
     @Override

@@ -31,16 +31,16 @@ public class AppInfoAdater extends RecyclerAdapter<PackageInfoBean, AppInfoAdate
         Drawable drawable = IconUtils.getAppIcon(holder.mLogo.getContext(), packageInfoBean.getPackageName());
         holder.mLogo.setImageDrawable(drawable);
         holder.mAppName.setText(packageInfoBean.getAppName());
-        holder.mUseCount.setText(String.format("使用次数:%d次", packageInfoBean.getUsedCount()));
+        holder.mUseCount.setText(String.format("Use Count:%d", packageInfoBean.getUsedCount()));
         long useTime = packageInfoBean.getUsedTime() / (1000 * 60);
         if (useTime < 1) {
-            holder.mUseTime.setText("使用时长:<1分钟");
+            holder.mUseTime.setText("Use Time:less than 1 minute");
         } else if (useTime > 60) {
             long hour = useTime / 60;
             long minute = useTime % 60;
-            holder.mUseTime.setText(String.format("使用时长:%d小时%d分钟", hour, minute));
+            holder.mUseTime.setText(String.format("Use Time:%d hours %d minutes", hour, minute));
         } else {
-            holder.mUseTime.setText(String.format("使用时长:%d分钟", useTime));
+            holder.mUseTime.setText(String.format("Use Time:%d minutes", useTime));
         }
     }
 
