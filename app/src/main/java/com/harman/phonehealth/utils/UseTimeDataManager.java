@@ -90,7 +90,12 @@ public class UseTimeDataManager {
         for (int i = 0; i < mStatsList.size(); i++) {
 //            屏蔽系统应用
 //            if (!isSystemApp(mContext, mStatsList.get(i).getPackageName())) {
-            PackageInfoBean info = new PackageInfoBean(0, calculateUseTime(mStatsList.get(i).getPackageName()), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName()));
+            PackageInfoBean info = null;
+            try {
+                info = new PackageInfoBean(getLaunchCount(mStatsList.get(i)), calculateUseTime(mStatsList.get(i).getPackageName()), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName()));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
             mPackageInfoBeanList.add(info);
 //            }
         }
