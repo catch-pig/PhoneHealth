@@ -1,8 +1,10 @@
-package com.harman.phonehealth.utils;
+package com.harman.phonehealth.entity;
 
 import android.annotation.TargetApi;
 import android.app.usage.UsageEvents;
 import android.os.Build;
+
+import com.harman.phonehealth.utils.DateTransUtils;
 
 import java.util.ArrayList;
 

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 
+import com.harman.phonehealth.entity.OneTimeDetails;
 import com.harman.phonehealth.entity.PackageInfoBean;
 
 import java.lang.reflect.Field;
@@ -26,12 +27,8 @@ public class UseTimeDataManager {
     public static final String TAG = "UseTimeDataManager";
 
     private static UseTimeDataManager mUseTimeDataManager;
-
     private Context mContext;
-
     private int mDayNum;
-    private long mStartTime;
-    private long mEndTime;
 
     //记录从系统中读取的数据
     private ArrayList<UsageEvents.Event> mEventList;
@@ -47,7 +44,6 @@ public class UseTimeDataManager {
     //主界面数据
     private ArrayList<PackageInfoBean> mPackageInfoBeanList = new ArrayList<>();
 
-
     private UseTimeDataManager(Context context) {
         this.mContext = context;
     }
@@ -56,14 +52,12 @@ public class UseTimeDataManager {
         if (mUseTimeDataManager == null) {
             mUseTimeDataManager = new UseTimeDataManager(context);
         }
-
         return mUseTimeDataManager;
     }
 
     /**
      * 主要的数据获取函数
      *
-     * @param dayNumber 查询若干天前的数据
      * @return int        0 : event usage 均查询到了
      * 1 : event 未查询到 usage 查询到了
      * 2 : event usage 均未查询到
@@ -71,25 +65,18 @@ public class UseTimeDataManager {
     public int refreshData(String date) {
         long startTime = 0;
         long endTime = 0;
-
         try {
             startTime = DateTransUtils.getStartClockTimeStamp(date);
             endTime = DateTransUtils.getEndClockTimeStamp(date);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d("testa",startTime+ " "+endTime);
+        Log.d("testa", startTime + " " + endTime);
         mEventList = getEventList(startTime, endTime);
         mStatsList = getUsageList(startTime, endTime);
 
-        if (mEventList == null || mEventList.size() == 0) {
-            Log.i(TAG, " UseTimeDataManager-refreshData()   未查到events");
-
-            if (mStatsList == null || mStatsList.size() == 0) {
-                Log.i(TAG, " UseTimeDataManager-refreshData()   未查到stats");
-                return 2;
-            }
-
+        if (mEventList == null || mEventList.size() == 0 || mStatsList == null || mStatsList.size() == 0) {
+            Log.i(TAG, " refreshData() mEventList or mStatsList has no data");
             return 1;
         }
 
@@ -97,7 +84,6 @@ public class UseTimeDataManager {
         mEventListChecked = getEventListChecked();
         refreshOneTimeDetailList(0);
         refreshPackageInfoList();
-//        sendEventBus();
         return 0;
     }
 
@@ -106,11 +92,11 @@ public class UseTimeDataManager {
     public void refreshPackageInfoList() {
         mPackageInfoBeanList.clear();
         for (int i = 0; i < mStatsList.size(); i++) {
-            //屏蔽系统应用
-            if (!isSystemApp(mContext, mStatsList.get(i).getPackageName())) {
-                PackageInfoBean info = new PackageInfoBean(0, calculateUseTime(mStatsList.get(i).getPackageName()), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName()));
-                mPackageInfoBeanList.add(info);
-            }
+//            屏蔽系统应用
+//            if (!isSystemApp(mContext, mStatsList.get(i).getPackageName())) {
+            PackageInfoBean info = new PackageInfoBean(0, calculateUseTime(mStatsList.get(i).getPackageName()), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName()));
+            mPackageInfoBeanList.add(info);
+//            }
         }
 
         for (int n = 0; n < mPackageInfoBeanList.size(); n++) {
@@ -122,53 +108,6 @@ public class UseTimeDataManager {
             }
         }
     }
-
-    //按照使用时间的长短进行排序，获取应用使用情况列表
-    public ArrayList<PackageInfoBean> getmPackageInfoListOrderByTime() {
-        Log.i(TAG, " UseTimeDataManager-getmPackageInfoListOrderByTime()   排序前：mPackageInfoBeanList.size()" + mPackageInfoBeanList.size());
-
-        for (int n = 0; n < mPackageInfoBeanList.size(); n++) {
-            for (int m = n + 1; m < mPackageInfoBeanList.size(); m++) {
-                if (mPackageInfoBeanList.get(n).getmUsedTime() < mPackageInfoBeanList.get(m).getmUsedTime()) {
-                    PackageInfoBean temp = mPackageInfoBeanList.get(n);
-                    mPackageInfoBeanList.set(n, mPackageInfoBeanList.get(m));
-                    mPackageInfoBeanList.set(m, temp);
-                }
-            }
-        }
-
-        Log.i(TAG, " UseTimeDataManager-getmPackageInfoListOrderByTime()   排序后：mPackageInfoBeanList.size()" + mPackageInfoBeanList.size());
-        return mPackageInfoBeanList;
-    }
-
-    //按照使用次数的多少进行排序，获取应用使用情况列表
-    public ArrayList<PackageInfoBean> getmPackageInfoListOrderByCount() {
-        Log.i(TAG, " UseTimeDataManager-getmPackageInfoListOrderByCount()   排序前：mPackageInfoBeanList.size()" + mPackageInfoBeanList.size());
-
-        for (int n = 0; n < mPackageInfoBeanList.size(); n++) {
-            for (int m = n + 1; m < mPackageInfoBeanList.size(); m++) {
-                if (mPackageInfoBeanList.get(n).getmUsedCount() < mPackageInfoBeanList.get(m).getmUsedCount()) {
-                    PackageInfoBean temp = mPackageInfoBeanList.get(n);
-                    mPackageInfoBeanList.set(n, mPackageInfoBeanList.get(m));
-                    mPackageInfoBeanList.set(m, temp);
-                }
-            }
-        }
-
-        Log.i(TAG, " UseTimeDataManager-getmPackageInfoListOrderByCount()   排序后：mPackageInfoBeanList.size()" + mPackageInfoBeanList.size());
-        return mPackageInfoBeanList;
-    }
-
-    /**
-     * @TargetApi(Build.VERSION_CODES.LOLLIPOP) private void sendEventBus(){
-     * TimeEvent event = new TimeEvent(0,0);
-     * if(mEventListChecked != null && mEventListChecked.size() > 0){
-     * event.setmStartTime(mEventListChecked.get(0).getTimeStamp());
-     * event.setmEndTime(mEventListChecked.get(mEventListChecked.size()-1).getTimeStamp());
-     * }
-     * MsgEventBus.getInstance().post(event);
-     * }
-     **/
 
     //从系统中获取event数据
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -230,7 +169,6 @@ public class UseTimeDataManager {
                 mOneTimeDetailList.clear();
             }
         }
-
         long totalTime = 0;
         int usedIndex = 0;
         String pkg = null;
@@ -260,8 +198,7 @@ public class UseTimeDataManager {
         Log.i(TAG, "   mEventListChecked 分类:   before  check :   list.size() = " + list.size());
         checkEventList(list);
         Log.i(TAG, "   mEventListChecked 分类:   after  check :   list.size() = " + list.size());
-//        startTime = list.get(0).getTimeStamp();
-//        endTime   = list.get( list.size() - 1 ).getTimeStamp();
+
         Log.i(TAG, "   mEventListChecked 分类:  本次启动的包名：" + list.get(0).getPackageName() + "   时间：" + DateUtils.formatSameDayTime(list.get(0).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM));
         for (int i = 1; i < list.size(); i += 2) {
             if (list.get(i).getEventType() == 2 && list.get(i - 1).getEventType() == 1) {
@@ -328,23 +265,13 @@ public class UseTimeDataManager {
         }
     }
 
-    // =======================================
-    // service use
-    // =======================================
-
-    public ArrayList<PackageInfoBean> getPkgInfoListFromEventList() {
-        return mPackageInfoBeanList;
-    }
-
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ArrayList<PackageInfoBean> getPkgInfoListFromUsageList() throws IllegalAccessException {
         ArrayList<PackageInfoBean> result = new ArrayList<>();
 
         if (mStatsList != null && mStatsList.size() > 0) {
             for (int i = 0; i < mStatsList.size(); i++) {
-
                 result.add(new PackageInfoBean(getLaunchCount(mStatsList.get(i)), mStatsList.get(i).getTotalTimeInForeground(), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName())));
-
             }
         }
         return result;
@@ -387,10 +314,10 @@ public class UseTimeDataManager {
         Log.i(TAG, "  calculateUseTime : " + useTime);
         return useTime;
     }
-    // =======================================
-    // getter and setter
-    // =======================================
 
+    public ArrayList<PackageInfoBean> getPkgInfoListFromEventList() {
+        return mPackageInfoBeanList;
+    }
 
     public int getmDayNum() {
         return mDayNum;

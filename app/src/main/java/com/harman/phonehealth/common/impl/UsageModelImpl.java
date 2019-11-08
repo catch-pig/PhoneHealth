@@ -24,29 +24,27 @@ public class UsageModelImpl implements UsageModel {
 
     @Override
     public List<PackageInfoBean> getTodayData() {
-//        useTimeDataManager.refreshData(0);
-        return useTimeDataManager.getmPackageInfoListOrderByTime();
+        return null;
     }
 
     @Override
     public List<PackageInfoBean> getSevenDayData() {
-//        useTimeDataManager.refreshData(7);
-        return useTimeDataManager.getmPackageInfoListOrderByTime();
+        return null;
     }
 
     @Override
-    public List<PackageInfoBean> getOneDayData(String date) {
+    public List<PackageInfoBean> getOneDayData(String date) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         long startTime;
         try {
             startTime = dateFormat.parse(date).getTime();
             if (startTime > System.currentTimeMillis()){
-                return null;
+                throw new Exception("Time can not after today");
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
         useTimeDataManager.refreshData(date);
-        return useTimeDataManager.getmPackageInfoListOrderByTime();
+        return useTimeDataManager.getPkgInfoListFromEventList();
     }
 }
