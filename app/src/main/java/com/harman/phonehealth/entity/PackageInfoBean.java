@@ -1,7 +1,12 @@
 package com.harman.phonehealth.entity;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
 public class PackageInfoBean {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private int usedCount;
     private long usedTime;
     private String packageName;
@@ -22,6 +27,14 @@ public class PackageInfoBean {
         this.usedTime = usedTime;
         this.packageName = packageName;
         this.appName = appName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void addCount() {

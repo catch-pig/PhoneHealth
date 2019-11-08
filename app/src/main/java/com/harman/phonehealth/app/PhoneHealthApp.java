@@ -1,11 +1,13 @@
 package com.harman.phonehealth.app;
 
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 
 import com.harman.phonehealth.di.component.AppComponent;
 import com.harman.phonehealth.di.component.DaggerAppComponent;
 import com.harman.phonehealth.di.module.AppModule;
+import com.harman.phonehealth.service.DataService;
 import com.harman.phonehealth.util.EnCodingUtils;
 
 public class PhoneHealthApp extends Application {
@@ -17,7 +19,9 @@ public class PhoneHealthApp extends Application {
     public void onCreate() {
         super.onCreate();
         sApplication = this;
-        testDES();
+        Intent intent = new Intent(this,DataService.class);
+        startService(intent);
+//        testDES();
     }
 
     public static AppComponent getAppComponent(){

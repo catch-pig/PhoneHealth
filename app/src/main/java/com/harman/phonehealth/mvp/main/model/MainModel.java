@@ -10,6 +10,4 @@ public class MainModel implements MainContract.Model {
 
     }
 
-
-
 }
