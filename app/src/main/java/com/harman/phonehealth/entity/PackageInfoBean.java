@@ -17,6 +17,7 @@ public class PackageInfoBean {
     }
 
     public PackageInfoBean(long date, int usedCount, long usedTime, String packageName, String appName) {
+        this.date = date;
         this.usedCount = usedCount;
         this.usedTime = usedTime;
         this.packageName = packageName;
