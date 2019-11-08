@@ -26,7 +26,6 @@ public class UseTimeDataManager {
     private Context mContext;
     private int mDayNum;
 
-    //记录从系统中读取的数据
     private ArrayList<UsageEvents.Event> mEventList;
     private ArrayList<UsageEvents.Event> mEventListChecked;
     private ArrayList<UsageStats> mStatsList;
@@ -51,13 +50,6 @@ public class UseTimeDataManager {
         return mUseTimeDataManager;
     }
 
-    /**
-     * 主要的数据获取函数
-     *
-     * @return int        0 : event usage 均查询到了
-     * 1 : event 未查询到 usage 查询到了
-     * 2 : event usage 均未查询到
-     */
     public int refreshData(String date) {
         long startTime = 0;
         long endTime = 0;
@@ -75,14 +67,12 @@ public class UseTimeDataManager {
             return 1;
         }
 
-        //获取数据之后，进行数据的处理
         mEventListChecked = getEventListChecked();
         refreshOneTimeDetailList(0);
         refreshPackageInfoList(startTime);
         return 0;
     }
 
-    //分类完成，初始化主界面所用到的数据
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void refreshPackageInfoList(long date) {
         mPackageInfoBeanList.clear();
@@ -109,13 +99,11 @@ public class UseTimeDataManager {
         }
     }
 
-    //从系统中获取event数据
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private ArrayList<UsageEvents.Event> getEventList(long startTime, long endTime) {
         return EventUtils.getEventList(mContext, startTime, endTime);
     }
 
-    //从系统中获取Usage数据
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private ArrayList<UsageStats> getUsageList(long startTime, long endTime) {
         return EventUtils.getUsageList(mContext, startTime, endTime);
@@ -160,10 +148,8 @@ public class UseTimeDataManager {
     //每次从0开始，将原本的 mOneTimeDetailList 清除一次,然后开始分类
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void refreshOneTimeDetailList(int startIndex) {
-        Log.i(TAG, "  refreshOneTimeDetailList()     startIndex : " + startIndex);
-
+        Log.i(TAG, " refreshOneTimeDetailList() startIndex : " + startIndex);
         if (startIndex == 0) {
-            Log.i(TAG, "  refreshOneTimeDetailList()     每次从0开始，将原本的 mOneTimeDetailList 清除一次,然后开始分类 ");
             if (mOneTimeDetailList != null) {
                 mOneTimeDetailList.clear();
             }
@@ -174,9 +160,6 @@ public class UseTimeDataManager {
         ArrayList<UsageEvents.Event> list = new ArrayList();
         for (int i = startIndex; i < mEventListChecked.size(); i++) {
             if (i == startIndex) {
-                if (mEventListChecked.get(i).getEventType() == 2) {
-                    Log.i(TAG, "  refreshOneTimeDetailList()     warning : 每次打开一个app  第一个activity的类型是 2     ");
-                }
                 pkg = mEventListChecked.get(i).getPackageName();
                 list.add(mEventListChecked.get(i));
             } else {
@@ -194,11 +177,8 @@ public class UseTimeDataManager {
             }
         }
 
-        Log.i(TAG, "   mEventListChecked 分类:   before  check :   list.size() = " + list.size());
         checkEventList(list);
-        Log.i(TAG, "   mEventListChecked 分类:   after  check :   list.size() = " + list.size());
-
-        Log.i(TAG, "   mEventListChecked 分类:  本次启动的包名：" + list.get(0).getPackageName() + "   时间：" + DateUtils.formatSameDayTime(list.get(0).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM));
+        Log.i(TAG, " mEventListChecked 本次启动的包名：" + list.get(0).getPackageName() + " 时间：" + DateUtils.formatSameDayTime(list.get(0).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM));
         for (int i = 1; i < list.size(); i += 2) {
             if (list.get(i).getEventType() == 2 && list.get(i - 1).getEventType() == 1) {
                 totalTime += (list.get(i).getTimeStamp() - list.get(i - 1).getTimeStamp());
@@ -209,10 +189,7 @@ public class UseTimeDataManager {
 
         if (usedIndex < mEventListChecked.size() - 1) {
             refreshOneTimeDetailList(usedIndex);
-        } else {
-            Log.i(TAG, "  refreshOneTimeDetailList()     已经将  mEventListChecked 分类完毕   ");
         }
-
     }
 
     public ArrayList<OneTimeDetails> getPkgOneTimeDetailList(String pkg) {
@@ -220,7 +197,6 @@ public class UseTimeDataManager {
         if ("all".equals(pkg)) {
             return mOneTimeDetailList;
         }
-
         ArrayList<OneTimeDetails> list = new ArrayList<>();
         if (mOneTimeDetailList != null && mOneTimeDetailList.size() > 0) {
             for (int i = 0; i < mOneTimeDetailList.size(); i++) {
@@ -232,7 +208,6 @@ public class UseTimeDataManager {
         return list;
     }
 
-    // 采用回溯的思想：
     // 从头遍历EventList，如果发现异常数据，则删除该异常数据，并从头开始再次进行遍历，直至无异常数据
     // （异常数据是指：event 均为 type=1 和type=2 ，成对出现，一旦发现未成对出现的数据，即视为异常数据）
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -241,13 +216,13 @@ public class UseTimeDataManager {
         for (int i = 0; i < list.size() - 1; i += 2) {
             if (list.get(i).getClassName().equals(list.get(i + 1).getClassName())) {
                 if (list.get(i).getEventType() != 1) {
-                    Log.i(UseTimeDataManager.TAG, "   EventList 出错  ： " + list.get(i).getPackageName() + "  " + DateUtils.formatSameDayTime(list.get(i).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM).toString());
+                    Log.i(UseTimeDataManager.TAG, " EventList 出错： " + list.get(i).getPackageName() + "  " + DateUtils.formatSameDayTime(list.get(i).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM).toString());
                     list.remove(i);
                     isCheckAgain = true;
                     break;
                 }
                 if (list.get(i + 1).getEventType() != 2) {
-                    Log.i(UseTimeDataManager.TAG, "   EventList 出错 ： " + list.get(i + 1).getPackageName() + "  " + DateUtils.formatSameDayTime(list.get(i + 1).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM).toString());
+                    Log.i(UseTimeDataManager.TAG, " EventList 出错： " + list.get(i + 1).getPackageName() + "  " + DateUtils.formatSameDayTime(list.get(i + 1).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM).toString());
                     list.remove(i);
                     isCheckAgain = true;
                     break;
@@ -276,7 +251,7 @@ public class UseTimeDataManager {
         return result;
     }
 
-    //判断app是否为系统qpp
+    //判断app是否为系统app
     public boolean isSystemApp(Context context, String packageName) {
         if (TextUtils.isEmpty(packageName)) {
             return false;
@@ -310,7 +285,7 @@ public class UseTimeDataManager {
                 useTime += mOneTimeDetailList.get(i).getUseTime();
             }
         }
-        Log.i(TAG, "  calculateUseTime : " + useTime);
+        Log.i(TAG, " calculateUseTime: " + useTime);
         return useTime;
     }
 

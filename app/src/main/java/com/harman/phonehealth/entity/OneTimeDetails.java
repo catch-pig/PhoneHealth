@@ -8,9 +8,6 @@ import com.harman.phonehealth.utils.DateTransUtils;
 
 import java.util.ArrayList;
 
-/**
- *
- */
 
 public class OneTimeDetails {
     private String pkgName;
@@ -45,25 +42,5 @@ public class OneTimeDetails {
 
     public void setOneTimeDetailEventList(ArrayList<UsageEvents.Event> oneTimeDetailEventList) {
         OneTimeDetailEventList = oneTimeDetailEventList;
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public String getStartTime() {
-        String startTime = null;
-        if (OneTimeDetailEventList.size() > 0) {
-            //startTime = DateUtils.formatSameDayTime(OneTimeDetailEventList.get(0).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM).toString();
-            startTime = DateTransUtils.stampToDate(OneTimeDetailEventList.get(0).getTimeStamp());
-        }
-        return startTime;
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public String getStopTime() {
-        String stopTime = null;
-        if (OneTimeDetailEventList.size() > 0) {
-            //stopTime = DateUtils.formatSameDayTime(OneTimeDetailEventList.get(OneTimeDetailEventList.size()-1).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM).toString();
-            stopTime = DateTransUtils.stampToDate(OneTimeDetailEventList.get(OneTimeDetailEventList.size() - 1).getTimeStamp());
-        }
-        return stopTime;
     }
 }
