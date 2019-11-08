@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleObserver;
 
+import com.harman.phonehealth.base.BaseContract;
 import com.harman.phonehealth.base.BasePresenter;
 
 import javax.inject.Inject;
@@ -17,7 +18,7 @@ import javax.inject.Inject;
  * 修改时间: 2019/4/6 11:25<br/>
  * 描述:
  */
-public abstract class BasePresenterFragment<P extends BasePresenter> extends BaseFragment implements LifecycleObserver {
+public abstract class BasePresenterFragment<P extends BaseContract.Presenter> extends BaseFragment implements LifecycleObserver {
     @Inject
     protected P mPresenter;
 

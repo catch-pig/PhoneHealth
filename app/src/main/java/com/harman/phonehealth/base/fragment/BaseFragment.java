@@ -33,13 +33,13 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(contentView(),container,false);
+        View view = inflater.inflate(layoutId(),container,false);
         mUnbinder = ButterKnife.bind(this,view);
         return view;
     }
 
     @LayoutRes
-    protected abstract int contentView();
+    protected abstract int layoutId();
 
 
     @Override
@@ -51,6 +51,11 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
             }
         }
         return mBaseActivity;
+    }
+
+    @Override
+    public void closeActivity() {
+        getBaseActivity().finish();
     }
 
     @Override

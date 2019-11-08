@@ -18,11 +18,11 @@ import io.reactivex.Single;
 @Dao
 public interface PackageInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertPackageInfos(List<PackageInfo> publicKeys);
+    void insertPackageInfos(List<PackageInfo> publicKeys);
     @Update
-    Completable updatePackageInfos(List<PackageInfo> publicKeys);
+    void updatePackageInfos(List<PackageInfo> publicKeys);
     @Delete
-    Completable deletePackageInfos(List<PackageInfo> publicKeys);
+    void deletePackageInfos(List<PackageInfo> publicKeys);
     @Query("SELECT * FROM PackageInfo")
     Single <List<PackageInfo>> findPackageInfoAll();
 

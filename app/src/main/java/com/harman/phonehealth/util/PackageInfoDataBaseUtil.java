@@ -65,41 +65,10 @@ public class PackageInfoDataBaseUtil {
                             if(packageInfos.size()==0){
                                 List<PackageInfo> packageInfos1 = new ArrayList<>();
                                 packageInfos1.add(packageInfo);
-                                RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().insertPackageInfos(packageInfos1)
-                                .subscribe(new CompletableObserver() {
-                                    @Override
-                                    public void onSubscribe(Disposable d) {
+                                RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().insertPackageInfos(packageInfos1);
 
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-                                        //插入成功
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-
-                                    }
-                                });
                             }else {
-                                RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().updatePackageInfos(packageInfos)
-                                .subscribe(new CompletableObserver() {
-                                    @Override
-                                    public void onSubscribe(Disposable d) {
-
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-                                        //跟新成功
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-
-                                    }
-                                });
+                                RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().updatePackageInfos(packageInfos);
                             }
                         }
 
