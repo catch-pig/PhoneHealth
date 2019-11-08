@@ -11,7 +11,7 @@ public class RoomUtils {
     public static AppDataBase db;
     public static AppDataBase getDataBase(Context context){
         if(db == null){
-            AppDataBase db = Room.databaseBuilder(context,
+            db = Room.databaseBuilder(context,
                     AppDataBase.class, "database-name").build();
         }
         return db;
