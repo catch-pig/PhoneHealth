@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleObserver;
 
 import com.harman.phonehealth.base.BaseContract;
-import com.harman.phonehealth.base.BasePresenter;
 
 import javax.inject.Inject;
 

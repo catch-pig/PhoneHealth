@@ -11,7 +11,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,7 +21,8 @@ public class SevenDayPresenter extends BasePresenter<SevenDayContract.View> impl
 
     private final UsageModel mUsageModel;
     private final AppInfoAdater mAppInfoAdater;
-    public SevenDayPresenter(SevenDayContract.View view,UsageModel usageModel,AppInfoAdater appInfoAdater) {
+
+    public SevenDayPresenter(SevenDayContract.View view, UsageModel usageModel, AppInfoAdater appInfoAdater) {
         super(view);
         mUsageModel = usageModel;
         mAppInfoAdater = appInfoAdater;
@@ -38,19 +38,19 @@ public class SevenDayPresenter extends BasePresenter<SevenDayContract.View> impl
     public void loadData() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH)+1;
+        int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-M-dd");
         long endTime = 0;
         try {
-            endTime = dateFormat.parse(year+"-"+month+"-"+day).getTime();
+            endTime = dateFormat.parse(year + "-" + month + "-" + day).getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        long startTime = endTime - (1000*60*60*24*6);
+        long startTime = endTime - (1000 * 60 * 60 * 24 * 6);
         RoomUtils.getDataBase(mView.getBaseActivity())
                 .packageInfoBeanDao()
-                .findPackageInfoSomeAppSomeDayByUsedTimeAsc(startTime,endTime)
+                .findPackageInfoSomeAppSomeDayByUsedTimeAsc(startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<PackageInfoBean>>() {

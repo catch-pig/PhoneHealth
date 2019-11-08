@@ -13,24 +13,25 @@ import com.harman.phonehealth.app.PhoneHealthApp;
 import com.harman.phonehealth.base.BaseActivity;
 import com.harman.phonehealth.di.module.DataModule;
 import com.harman.phonehealth.mvp.main.view.MainActivity;
-import com.harman.phonehealth.service.presenter.DataPresenter;
 
 import javax.inject.Inject;
 
-public class DataService extends Service implements DataContract.View{
+public class DataService extends Service implements DataContract.View {
+    public static final String ACTION_INSERT_SUCCESS_TO_DB = "insertSuccess";
     @Inject
     DataContract.Presenter mPresenter;
-    public static final String ACTION_INSERT_SUCCESS_TO_DB = "insertSuccess";
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
         }
     };
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -44,7 +45,7 @@ public class DataService extends Service implements DataContract.View{
                 mPresenter.insertData();
             }
         };
-        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver,intentFilter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver, intentFilter);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class DataService extends Service implements DataContract.View{
 
     @Override
     public void onDestroy() {
-        if(mBroadcastReceiver!=null){
+        if (mBroadcastReceiver != null) {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
         }
     }

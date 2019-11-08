@@ -12,22 +12,23 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class MainModule extends BaseActivityModule<MainContract.View>{
+public class MainModule extends BaseActivityModule<MainContract.View> {
     private final FragmentManager mFragmentManager;
-    public MainModule(MainContract.View view,FragmentManager fragmentManager) {
+
+    public MainModule(MainContract.View view, FragmentManager fragmentManager) {
         super(view);
         mFragmentManager = fragmentManager;
     }
 
     @ActicityScope
     @Provides
-    public MainContract.Presenter providesMainPresenter(MainModel mainModel,MainAdapter mainAdapter){
-        return new MainPresenter(mView,mainModel,mainAdapter);
+    public MainContract.Presenter providesMainPresenter(MainModel mainModel, MainAdapter mainAdapter) {
+        return new MainPresenter(mView, mainModel, mainAdapter);
     }
 
     @ActicityScope
     @Provides
-    public MainAdapter providesMainAdapter(){
+    public MainAdapter providesMainAdapter() {
         return new MainAdapter(mFragmentManager);
     }
 }

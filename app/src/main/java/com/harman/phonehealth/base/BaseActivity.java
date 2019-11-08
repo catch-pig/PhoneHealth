@@ -9,8 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseContract.View{
+public abstract class BaseActivity extends AppCompatActivity implements BaseContract.View {
     private Unbinder mUnbinder;
+
     @CallSuper
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
     }
 
     protected abstract int layoutId();
+
     @Override
     public void closeActivity() {
         finish();
@@ -34,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mUnbinder!=null) {
+        if (mUnbinder != null) {
             mUnbinder.unbind();
         }
     }

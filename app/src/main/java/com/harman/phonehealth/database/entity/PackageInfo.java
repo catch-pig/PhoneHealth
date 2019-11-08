@@ -1,7 +1,5 @@
 package com.harman.phonehealth.database.entity;
 
-import com.harman.phonehealth.entity.PackageInfoBean;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -60,11 +58,7 @@ public class PackageInfo {
         if (o == null) return false;
         if (this == o) return true;
         PackageInfo standardDetail = (PackageInfo) o;
-        if (standardDetail.getPackageName().equals(this.packageName)) {
-            return true;
-        } else {
-            return false;
-        }
+        return standardDetail.getPackageName().equals(this.packageName);
     }
 
     @Override

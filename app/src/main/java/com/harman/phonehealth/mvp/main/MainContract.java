@@ -7,10 +7,12 @@ public interface MainContract {
     interface View extends BaseContract.View {
         void initAdapter(MainAdapter mainAdapter);
     }
-    interface Presenter extends BaseContract.Presenter{
+
+    interface Presenter extends BaseContract.Presenter {
 
     }
-    interface Model{
+
+    interface Model {
 
     }
 }

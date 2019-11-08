@@ -3,17 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:drawablePadding="8dp"
-      android:gravity="center"
-      android:text="暂无数据"
-      android:textColor="#999999"
-      android:textSize="30sp"
-      />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:textColor="#999999"
+        android:textSize="30sp" />
 </LinearLayout>

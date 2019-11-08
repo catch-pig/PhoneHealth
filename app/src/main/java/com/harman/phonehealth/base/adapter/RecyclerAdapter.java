@@ -27,10 +27,9 @@ import java.util.List;
  * 描述: RecyclerViewAdapter基类
  */
 
-public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
+public abstract class RecyclerAdapter<M, VH extends BaseViewHolder>
         extends RecyclerView.Adapter<BaseViewHolder> {
 
-    protected List<M> mData = new ArrayList<>();
     /**
      * 头部类型
      */
@@ -47,11 +46,13 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
      * 正常的item
      */
     public static final int TYPE_NORMAL = 0;
+    protected List<M> mData = new ArrayList<>();
+    protected OnItemClickListener mListener;
+    protected RecyclerView mRecyclerView;
     /**
      * 头部
      */
     private View mHeaderView;
-
     /**
      * 底部
      */
@@ -68,8 +69,6 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
      * 是否是第一次加载数据
      */
     private boolean firstLoad = true;
-    protected OnItemClickListener mListener;
-
 
     public RecyclerAdapter() {
     }
@@ -82,13 +81,6 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
     }
 
     /**
-     * 添加头部
-     */
-    public void setHeaderView(View headerView) {
-        mHeaderView = headerView;
-    }
-
-    /**
      * 获取头部
      */
     public View getHeaderView() {
@@ -96,10 +88,10 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
     }
 
     /**
-     * 添加底部
+     * 添加头部
      */
-    public void setFooterView(View footerView) {
-        mFooterView = footerView;
+    public void setHeaderView(View headerView) {
+        mHeaderView = headerView;
     }
 
     /**
@@ -107,6 +99,13 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
      */
     public View getFooterView() {
         return mFooterView;
+    }
+
+    /**
+     * 添加底部
+     */
+    public void setFooterView(View footerView) {
+        mFooterView = footerView;
     }
 
     /**
@@ -123,11 +122,8 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
         return mData;
     }
 
-    private boolean isNull(List<M> list){
-        if (list!=null) {
-            return false;
-        }
-        return true;
+    private boolean isNull(List<M> list) {
+        return list == null;
     }
 
     public M get(int position) {
@@ -170,8 +166,6 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
         mData.addAll(data);
         notifyDataSetChanged();
     }
-
-
 
     @Override
     public int getItemViewType(int position) {
@@ -239,16 +233,14 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
         return createHolder(parent, viewType);
     }
 
-
     /**
      * 除头部和底部的ViewHolder的获取
      *
      * @param viewType holder的类型
      */
-    protected BaseViewHolder createHolder(ViewGroup parent, int viewType){
+    protected BaseViewHolder createHolder(ViewGroup parent, int viewType) {
         return reflectViewHolder(parent);
     }
-
 
     protected abstract int layoutId();
 
@@ -339,8 +331,6 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
      */
     public abstract void bindViewHolder(VH holder, M m, int position);
 
-    protected RecyclerView mRecyclerView;
-
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -373,6 +363,18 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
     }
 
     /**
+     * item点击事件
+     */
+    public interface OnItemClickListener<M> {
+        /**
+         * @param id       RecyclerView.getId()
+         * @param m        item下的实体
+         * @param position item所在的位置
+         */
+        void itemClick(@IdRes int id, M m, int position);
+    }
+
+    /**
      * 头部和底部的ViewHolder
      */
     static class HeaderAndFooterViewHolder extends BaseViewHolder {
@@ -380,17 +382,5 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
         public HeaderAndFooterViewHolder(View itemView) {
             super(itemView);
         }
-    }
-
-    /**
-     * item点击事件
-     */
-    public interface OnItemClickListener<M> {
-        /**
-         * @param id RecyclerView.getId()
-         * @param m item下的实体
-         * @param position item所在的位置
-         */
-        void itemClick(@IdRes int id, M m, int position);
     }
 }

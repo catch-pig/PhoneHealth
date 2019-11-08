@@ -23,9 +23,11 @@ public class SevenDayFragment extends BasePresenterFragment<SevenDayContract.Pre
     @BindView(R.id.recycle)
     RecyclerView mRecyclerView;
     private BroadcastReceiver mBroadcastReceiver;
-    public static SevenDayFragment getInstance(){
+
+    public static SevenDayFragment getInstance() {
         return new SevenDayFragment();
     }
+
     @Override
     protected void initParam() {
 
@@ -47,13 +49,14 @@ public class SevenDayFragment extends BasePresenterFragment<SevenDayContract.Pre
                 mPresenter.loadData();
             }
         };
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mBroadcastReceiver,intentFilter);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mBroadcastReceiver, intentFilter);
     }
 
     @Override
     protected int layoutId() {
         return R.layout.activity_app_info;
     }
+
     @Override
     public void initAdapter(AppInfoAdater appInfoAdater) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -61,10 +64,11 @@ public class SevenDayFragment extends BasePresenterFragment<SevenDayContract.Pre
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(appInfoAdater);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mBroadcastReceiver!=null) {
+        if (mBroadcastReceiver != null) {
             LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mBroadcastReceiver);
         }
     }

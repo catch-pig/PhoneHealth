@@ -14,6 +14,7 @@ import java.util.List;
 public class MainAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> mFragmentList = new ArrayList<>();
     private List<String> mTitle = new ArrayList<>();
+
     public MainAdapter(FragmentManager fm) {
         super(fm);
         mFragmentList.add(TodayFragment.getInstance());

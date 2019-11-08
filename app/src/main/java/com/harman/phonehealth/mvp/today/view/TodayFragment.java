@@ -11,11 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.harman.phonehealth.R;
 import com.harman.phonehealth.app.PhoneHealthApp;
-import com.harman.phonehealth.base.fragment.BaseFragment;
 import com.harman.phonehealth.base.fragment.BasePresenterFragment;
 import com.harman.phonehealth.di.module.TodayModule;
 import com.harman.phonehealth.mvp.main.adapter.AppInfoAdater;
-import com.harman.phonehealth.mvp.main.view.MainActivity;
 import com.harman.phonehealth.mvp.today.TodayContract;
 import com.harman.phonehealth.service.DataService;
 
@@ -26,7 +24,7 @@ public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter
     RecyclerView mRecyclerView;
     private BroadcastReceiver mBroadcastReceiver;
 
-    public static TodayFragment getInstance(){
+    public static TodayFragment getInstance() {
         return new TodayFragment();
     }
 
@@ -56,7 +54,7 @@ public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter
                 mPresenter.loadData();
             }
         };
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mBroadcastReceiver,intentFilter);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mBroadcastReceiver, intentFilter);
     }
 
     @Override
@@ -70,7 +68,7 @@ public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mBroadcastReceiver!=null) {
+        if (mBroadcastReceiver != null) {
             LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mBroadcastReceiver);
         }
     }

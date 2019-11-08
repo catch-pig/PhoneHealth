@@ -9,12 +9,14 @@ import dagger.Provides;
 @Module
 public abstract class BaseActivityModule<V extends BaseContract.View> {
     protected V mView;
-    public BaseActivityModule(V view){
+
+    public BaseActivityModule(V view) {
         mView = view;
     }
+
     @ActicityScope
     @Provides
-    public V providesView(){
+    public V providesView() {
         return mView;
     }
 }

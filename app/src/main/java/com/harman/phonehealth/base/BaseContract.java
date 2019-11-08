@@ -7,6 +7,7 @@ import androidx.lifecycle.OnLifecycleEvent;
 public interface BaseContract {
     interface View {
         BaseActivity getBaseActivity();
+
         void closeActivity();
     }
 

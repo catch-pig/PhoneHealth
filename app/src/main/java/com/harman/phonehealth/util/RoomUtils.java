@@ -9,8 +9,9 @@ import com.harman.phonehealth.database.AppDataBase;
 public class RoomUtils {
     public static RoomUtils mInstance;
     public static AppDataBase db;
-    public static AppDataBase getDataBase(Context context){
-        if(db == null){
+
+    public static AppDataBase getDataBase(Context context) {
+        if (db == null) {
             db = Room.databaseBuilder(context,
                     AppDataBase.class, "database-name").build();
         }

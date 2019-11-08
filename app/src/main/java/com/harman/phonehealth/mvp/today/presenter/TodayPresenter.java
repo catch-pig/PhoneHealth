@@ -20,7 +20,8 @@ import io.reactivex.schedulers.Schedulers;
 public class TodayPresenter extends BasePresenter<TodayContract.View> implements TodayContract.Presenter {
     private final UsageModel mUsageModel;
     private final AppInfoAdater mAppInfoAdater;
-    public TodayPresenter(TodayContract.View view,UsageModel usageModel,AppInfoAdater appInfoAdater) {
+
+    public TodayPresenter(TodayContract.View view, UsageModel usageModel, AppInfoAdater appInfoAdater) {
         super(view);
         mUsageModel = usageModel;
         mAppInfoAdater = appInfoAdater;

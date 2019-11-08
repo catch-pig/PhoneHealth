@@ -13,20 +13,20 @@ public class PackageInfoBean {
     private String appName;
     private long date;
 
-    public long getDate() {
-        return date;
-    }
-
-    public void setDate(long date) {
-        this.date = date;
-    }
-
     public PackageInfoBean(long date, int usedCount, long usedTime, String packageName, String appName) {
         this.date = date;
         this.usedCount = usedCount;
         this.usedTime = usedTime;
         this.packageName = packageName;
         this.appName = appName;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 
     public int getId() {
@@ -78,11 +78,7 @@ public class PackageInfoBean {
         if (o == null) return false;
         if (this == o) return true;
         PackageInfoBean standardDetail = (PackageInfoBean) o;
-        if (standardDetail.getPackageName().equals(this.packageName)) {
-            return true;
-        } else {
-            return false;
-        }
+        return standardDetail.getPackageName().equals(this.packageName);
     }
 
     @Override

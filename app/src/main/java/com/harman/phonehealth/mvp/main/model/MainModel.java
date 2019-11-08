@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 public class MainModel implements MainContract.Model {
     @Inject
-    public MainModel(){
+    public MainModel() {
 
     }
 

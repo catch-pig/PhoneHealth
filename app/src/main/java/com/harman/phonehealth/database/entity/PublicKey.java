@@ -36,6 +36,6 @@ public class PublicKey {
 
     @Override
     public String toString() {
-        return "key----id:"+getId()+" keyvalue:"+getKeyValue()+" keyMode:"+getKeyMode();
+        return "key----id:" + getId() + " keyvalue:" + getKeyValue() + " keyMode:" + getKeyMode();
     }
 }

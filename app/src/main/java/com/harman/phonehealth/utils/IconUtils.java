@@ -5,7 +5,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 
 public class IconUtils {
-    public static Drawable getAppIcon(Context context,String packageName){
+    public static Drawable getAppIcon(Context context, String packageName) {
         PackageManager packageManager = context.getPackageManager();
         Drawable drawable = null;
         try {

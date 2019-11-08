@@ -20,9 +20,10 @@ public abstract class BaseFragmentModule<V extends BaseContract.View> {
     public BaseFragmentModule(V view) {
         mView = view;
     }
+
     @FragmentScope
     @Provides
-    public V providesView(){
+    public V providesView() {
         return mView;
     }
 }

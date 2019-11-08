@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import androidx.annotation.CallSuper;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -33,8 +32,8 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(layoutId(),container,false);
-        mUnbinder = ButterKnife.bind(this,view);
+        View view = inflater.inflate(layoutId(), container, false);
+        mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -44,7 +43,7 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
 
     @Override
     public BaseActivity getBaseActivity() {
-        if (mBaseActivity==null) {
+        if (mBaseActivity == null) {
             Activity activity = getActivity();
             if (activity instanceof BaseActivity) {
                 mBaseActivity = (BaseActivity) activity;
@@ -61,7 +60,7 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mUnbinder!=null) {
+        if (mUnbinder != null) {
             mUnbinder.unbind();
         }
     }

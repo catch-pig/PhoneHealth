@@ -10,11 +10,13 @@ import dagger.Provides;
 @Module
 public class DataModule {
     private DataContract.View mView;
-    public DataModule(DataContract.View view){
+
+    public DataModule(DataContract.View view) {
         mView = view;
     }
+
     @Provides
-    public DataContract.Presenter providesDataPresenter(UsageModel usageModel){
-        return new DataPresenter(mView,usageModel);
+    public DataContract.Presenter providesDataPresenter(UsageModel usageModel) {
+        return new DataPresenter(mView, usageModel);
     }
 }

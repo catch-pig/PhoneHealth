@@ -17,25 +17,27 @@ import dagger.Provides;
 public class AppModule {
     private Application mApplication;
     private AppDataBase mAppDataBase;
-    public AppModule(Application application){
+
+    public AppModule(Application application) {
         mApplication = application;
-        mAppDataBase = Room.databaseBuilder(application.getApplicationContext(),AppDataBase.class,"database-phone-health").build();
+        mAppDataBase = Room.databaseBuilder(application.getApplicationContext(), AppDataBase.class, "database-phone-health").build();
     }
+
     @Singleton
     @Provides
-    public Application providesApplication(){
+    public Application providesApplication() {
         return mApplication;
     }
 
     @Singleton
     @Provides
-    public UsageModel providesUsageModel(){
+    public UsageModel providesUsageModel() {
         return new UsageModelImpl(mApplication);
     }
 
     @Singleton
     @Provides
-    public AppDataBase providesAppDataBase(){
+    public AppDataBase providesAppDataBase() {
         return mAppDataBase;
     }
 }

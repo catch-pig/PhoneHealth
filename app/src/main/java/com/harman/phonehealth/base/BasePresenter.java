@@ -2,7 +2,8 @@ package com.harman.phonehealth.base;
 
 public abstract class BasePresenter<V extends BaseContract.View> implements BaseContract.Presenter {
     protected final V mView;
-    public BasePresenter(V view){
+
+    public BasePresenter(V view) {
         mView = view;
     }
 

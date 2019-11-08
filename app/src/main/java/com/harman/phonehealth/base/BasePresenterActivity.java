@@ -20,6 +20,8 @@ public abstract class BasePresenterActivity<P extends BaseContract.Presenter> ex
     }
 
     protected abstract void initParam();
+
     protected abstract void injectComponent();
+
     protected abstract void initView();
 }

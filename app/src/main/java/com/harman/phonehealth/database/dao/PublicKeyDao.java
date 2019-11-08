@@ -14,11 +14,14 @@ import java.util.List;
 @Dao
 public interface PublicKeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertKeys(PublicKey... publicKeys);
+    void insertKeys(PublicKey... publicKeys);
+
     @Update
-    public void updateKeys(PublicKey... publicKeys);
+    void updateKeys(PublicKey... publicKeys);
+
     @Delete
-    public void deleteUsers(PublicKey... publicKeys);
+    void deleteUsers(PublicKey... publicKeys);
+
     @Query("SELECT * FROM PublicKey WHERE keyMode =:search ")
-    public List<PublicKey> findKeyWithMode(int search);
+    List<PublicKey> findKeyWithMode(int search);
 }

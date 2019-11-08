@@ -9,49 +9,47 @@ import com.harman.phonehealth.database.entity.PackageInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.CompletableObserver;
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class PackageInfoDataBaseUtil {
-    private static class PackageInfoDataBaseUtilUtilsHolder{
-        private static final PackageInfoDataBaseUtil instance=new PackageInfoDataBaseUtil();
-    }
-    public static PackageInfoDataBaseUtil getInstance(Context context){
+    public static PackageInfoDataBaseUtil getInstance(Context context) {
         return PackageInfoDataBaseUtilUtilsHolder.instance;
     }
 
-    public static Single<List<PackageInfo>> getPackagesByPackagename(String packageName){
+    public static Single<List<PackageInfo>> getPackagesByPackagename(String packageName) {
         return RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoWithPackageName(packageName)
                 .subscribeOn(Schedulers.single());
 
     }
-    public static Single<List<PackageInfo>> getPackages(){
+
+    public static Single<List<PackageInfo>> getPackages() {
         return RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoAll()
                 .subscribeOn(Schedulers.single());
 
     }
-    public static Single<List<PackageInfo>> getPackagesByAppname(String appName){
+
+    public static Single<List<PackageInfo>> getPackagesByAppname(String appName) {
         return RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoWithAppName(appName)
                 .subscribeOn(Schedulers.single());
     }
-    public static Single<List<PackageInfo>> getPackagesByTime(int time){
+
+    public static Single<List<PackageInfo>> getPackagesByTime(int time) {
         return RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoWithUserTime(time)
                 .subscribeOn(Schedulers.single());
     }
-    public static Single<List<PackageInfo>> getPackagesByUseCount(int useCount){
+
+    public static Single<List<PackageInfo>> getPackagesByUseCount(int useCount) {
         return RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoWithUsedCount(useCount)
                 .subscribeOn(Schedulers.single());
     }
-    public static void insertByAppName(final PackageInfo packageInfo){
-        if(packageInfo!=null&&packageInfo.getAppName()!=null&&!packageInfo.getAppName().equals("")){
+
+    public static void insertByAppName(final PackageInfo packageInfo) {
+        if (packageInfo != null && packageInfo.getAppName() != null && !packageInfo.getAppName().equals("")) {
             String appName = packageInfo.getAppName();
-          RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoWithAppName(appName)
+            RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoWithAppName(appName)
                     .subscribeOn(Schedulers.single()).observeOn(Schedulers.single())
                     .subscribe(new SingleObserver<List<PackageInfo>>() {
                         @Override
@@ -61,13 +59,13 @@ public class PackageInfoDataBaseUtil {
 
                         @Override
                         public void onSuccess(List<PackageInfo> packageInfos) {
-                            Log.i("PHoneHealthAPP1","");
-                            if(packageInfos.size()==0){
+                            Log.i("PHoneHealthAPP1", "");
+                            if (packageInfos.size() == 0) {
                                 List<PackageInfo> packageInfos1 = new ArrayList<>();
                                 packageInfos1.add(packageInfo);
                                 RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().insertPackageInfos(packageInfos1);
 
-                            }else {
+                            } else {
                                 RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().updatePackageInfos(packageInfos);
                             }
                         }
@@ -81,8 +79,9 @@ public class PackageInfoDataBaseUtil {
                     });
         }
     }
-    public static void deleteByAppName(final PackageInfo packageInfo){
-        if(packageInfo!=null&&packageInfo.getAppName()!=null&&!packageInfo.getAppName().equals("")){
+
+    public static void deleteByAppName(final PackageInfo packageInfo) {
+        if (packageInfo != null && packageInfo.getAppName() != null && !packageInfo.getAppName().equals("")) {
             String appName = packageInfo.getAppName();
             RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoWithAppName(appName)
                     .subscribeOn(Schedulers.single()).observeOn(Schedulers.single())
@@ -94,7 +93,7 @@ public class PackageInfoDataBaseUtil {
 
                         @Override
                         public void onSuccess(List<PackageInfo> packageInfos) {
-                            if(packageInfos!=null&&packageInfos.size()>0){
+                            if (packageInfos != null && packageInfos.size() > 0) {
                                 RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().deletePackageInfos(packageInfos);
                             }
                         }
@@ -106,8 +105,9 @@ public class PackageInfoDataBaseUtil {
                     });
         }
     }
-    public static void deleteByPackageName(final PackageInfo packageInfo){
-        if(packageInfo!=null&&packageInfo.getAppName()!=null&&!packageInfo.getAppName().equals("")){
+
+    public static void deleteByPackageName(final PackageInfo packageInfo) {
+        if (packageInfo != null && packageInfo.getAppName() != null && !packageInfo.getAppName().equals("")) {
             String packageName = packageInfo.getPackageName();
             RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoWithPackageName(packageName)
                     .subscribeOn(Schedulers.single()).observeOn(Schedulers.single())
@@ -119,7 +119,7 @@ public class PackageInfoDataBaseUtil {
 
                         @Override
                         public void onSuccess(List<PackageInfo> packageInfos) {
-                            if(packageInfos!=null&&packageInfos.size()>0){
+                            if (packageInfos != null && packageInfos.size() > 0) {
                                 RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().deletePackageInfos(packageInfos);
                             }
                         }
@@ -131,8 +131,9 @@ public class PackageInfoDataBaseUtil {
                     });
         }
     }
-    public static void deleteByUsedCount(final PackageInfo packageInfo){
-        if(packageInfo!=null&&packageInfo.getAppName()!=null&&!packageInfo.getAppName().equals("")){
+
+    public static void deleteByUsedCount(final PackageInfo packageInfo) {
+        if (packageInfo != null && packageInfo.getAppName() != null && !packageInfo.getAppName().equals("")) {
             int usedCount = packageInfo.getUsedCount();
             RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoWithUsedCount(usedCount)
                     .subscribeOn(Schedulers.single()).observeOn(Schedulers.single())
@@ -144,7 +145,7 @@ public class PackageInfoDataBaseUtil {
 
                         @Override
                         public void onSuccess(List<PackageInfo> packageInfos) {
-                            if(packageInfos!=null&&packageInfos.size()>0){
+                            if (packageInfos != null && packageInfos.size() > 0) {
                                 RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().deletePackageInfos(packageInfos);
                             }
                         }
@@ -157,8 +158,8 @@ public class PackageInfoDataBaseUtil {
         }
     }
 
-    public static void deleteByUsedTime(final PackageInfo packageInfo){
-        if(packageInfo!=null&&packageInfo.getAppName()!=null&&!packageInfo.getAppName().equals("")){
+    public static void deleteByUsedTime(final PackageInfo packageInfo) {
+        if (packageInfo != null && packageInfo.getAppName() != null && !packageInfo.getAppName().equals("")) {
             long time = packageInfo.getUsedTime();
             RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().findPackageInfoWithUserTime(time)
                     .subscribeOn(Schedulers.single()).observeOn(Schedulers.single())
@@ -170,7 +171,7 @@ public class PackageInfoDataBaseUtil {
 
                         @Override
                         public void onSuccess(List<PackageInfo> packageInfos) {
-                            if(packageInfos!=null&&packageInfos.size()>0){
+                            if (packageInfos != null && packageInfos.size() > 0) {
                                 RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoDao().deletePackageInfos(packageInfos);
                             }
                         }
@@ -181,5 +182,9 @@ public class PackageInfoDataBaseUtil {
                         }
                     });
         }
+    }
+
+    private static class PackageInfoDataBaseUtilUtilsHolder {
+        private static final PackageInfoDataBaseUtil instance = new PackageInfoDataBaseUtil();
     }
 }
