@@ -178,7 +178,7 @@ public class UseTimeDataManager {
         }
 
         checkEventList(list);
-        Log.i(TAG, " mEventListChecked 本次启动的包名：" + list.get(0).getPackageName() + " 时间：" + DateUtils.formatSameDayTime(list.get(0).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM));
+//        Log.i(TAG, " mEventListChecked 本次启动的包名：" + list.get(0).getPackageName() + " 时间：" + DateUtils.formatSameDayTime(list.get(0).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM));
         for (int i = 1; i < list.size(); i += 2) {
             if (list.get(i).getEventType() == 2 && list.get(i - 1).getEventType() == 1) {
                 totalTime += (list.get(i).getTimeStamp() - list.get(i - 1).getTimeStamp());
@@ -216,13 +216,13 @@ public class UseTimeDataManager {
         for (int i = 0; i < list.size() - 1; i += 2) {
             if (list.get(i).getClassName().equals(list.get(i + 1).getClassName())) {
                 if (list.get(i).getEventType() != 1) {
-                    Log.i(UseTimeDataManager.TAG, " EventList 出错： " + list.get(i).getPackageName() + "  " + DateUtils.formatSameDayTime(list.get(i).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM).toString());
+                    Log.e(UseTimeDataManager.TAG, " EventList 出错： " + list.get(i).getPackageName() + "  " + DateUtils.formatSameDayTime(list.get(i).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM).toString());
                     list.remove(i);
                     isCheckAgain = true;
                     break;
                 }
                 if (list.get(i + 1).getEventType() != 2) {
-                    Log.i(UseTimeDataManager.TAG, " EventList 出错： " + list.get(i + 1).getPackageName() + "  " + DateUtils.formatSameDayTime(list.get(i + 1).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM).toString());
+                    Log.e(UseTimeDataManager.TAG, " EventList 出错： " + list.get(i + 1).getPackageName() + "  " + DateUtils.formatSameDayTime(list.get(i + 1).getTimeStamp(), System.currentTimeMillis(), DateFormat.MEDIUM, DateFormat.MEDIUM).toString());
                     list.remove(i);
                     isCheckAgain = true;
                     break;

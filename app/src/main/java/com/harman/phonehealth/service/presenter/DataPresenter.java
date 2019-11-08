@@ -36,15 +36,15 @@ public class DataPresenter extends BasePresenter<DataContract.View> implements D
 
     }
 
-    private void insertData(){
+    public void insertData(){
         Log.i("DataService","insertData");
         if(mUsageModel!=null){
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = new Date(System.currentTimeMillis());
-            String str=simpleDateFormat.format(date);
+            final Date date = new Date(System.currentTimeMillis());
+            final String str=simpleDateFormat.format(date);
             Log.i("DataService","today str="+str);
             List<String> days = getDaysBetwwen(7);
-            List<PackageInfoBean> list = new ArrayList<PackageInfoBean>();
+            final List<PackageInfoBean> list = new ArrayList<PackageInfoBean>();
             if (days!=null){
                 for (int i=0;i<days.size();i++){
                     list.addAll(mUsageModel.getOneDayData(days.get(i)));
@@ -56,6 +56,7 @@ public class DataPresenter extends BasePresenter<DataContract.View> implements D
                         Log.i("DataService","Thread insert  list=");
                         RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoBeanDao().deletePackageInfoBean();
                         RoomUtils.getDataBase(PhoneHealthApp.sApplication).packageInfoBeanDao().insertPackageInfos(list);
+                        mView.insertSuccessToDb();
                         Log.i("DataService","day ,"+" select   date.getTime()="+date.getTime());
                         long temp = 1572537600000L;
                         long startTime = 0L;
@@ -76,6 +77,7 @@ public class DataPresenter extends BasePresenter<DataContract.View> implements D
 
                                     @Override
                                     public void onSuccess(List<PackageInfoBean> packageInfoBeans) {
+
                                         if ( packageInfoBeans!= null) {
                                             Log.i("DataService","day ,"+" select  packageInfoBeans.size()="+packageInfoBeans.size());
                                         }
@@ -96,7 +98,7 @@ public class DataPresenter extends BasePresenter<DataContract.View> implements D
 
     }
 
-    private   Date getDateAdd(int days){
+    private Date getDateAdd(int days){
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, -days);

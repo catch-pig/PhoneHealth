@@ -1,5 +1,11 @@
 package com.harman.phonehealth.mvp.today.view;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,13 +15,16 @@ import com.harman.phonehealth.base.fragment.BaseFragment;
 import com.harman.phonehealth.base.fragment.BasePresenterFragment;
 import com.harman.phonehealth.di.module.TodayModule;
 import com.harman.phonehealth.mvp.main.adapter.AppInfoAdater;
+import com.harman.phonehealth.mvp.main.view.MainActivity;
 import com.harman.phonehealth.mvp.today.TodayContract;
+import com.harman.phonehealth.service.DataService;
 
 import butterknife.BindView;
 
 public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter> implements TodayContract.View {
     @BindView(R.id.recycle)
     RecyclerView mRecyclerView;
+    private BroadcastReceiver mBroadcastReceiver;
 
     public static TodayFragment getInstance(){
         return new TodayFragment();
@@ -38,7 +47,16 @@ public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter
 
     @Override
     protected void initView() {
-
+        mPresenter.loadData();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(DataService.ACTION_INSERT_SUCCESS_TO_DB);
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                mPresenter.loadData();
+            }
+        };
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mBroadcastReceiver,intentFilter);
     }
 
     @Override
@@ -47,5 +65,13 @@ public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(appInfoAdater);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBroadcastReceiver!=null) {
+            LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mBroadcastReceiver);
+        }
     }
 }

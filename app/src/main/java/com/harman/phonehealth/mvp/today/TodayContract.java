@@ -8,7 +8,7 @@ public interface TodayContract {
         void initAdapter(AppInfoAdater appInfoAdater);
     }
     interface Presenter extends BaseContract.Presenter{
-
+        void loadData();
     }
     interface Model{
 

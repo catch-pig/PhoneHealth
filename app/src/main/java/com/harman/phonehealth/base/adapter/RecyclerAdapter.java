@@ -146,7 +146,8 @@ public abstract class RecyclerAdapter<M,VH extends BaseViewHolder>
     public void set(List<M> data) {
         firstLoad = false;
         if (data != null) {
-            mData = data;
+            mData.clear();
+            mData.addAll(data);
         }
         notifyDataSetChanged();
     }
