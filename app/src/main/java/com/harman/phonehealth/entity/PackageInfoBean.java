@@ -6,8 +6,17 @@ public class PackageInfoBean {
     private long usedTime;
     private String packageName;
     private String appName;
+    private long date;
 
-    public PackageInfoBean(int usedCount, long usedTime, String packageName, String appName) {
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
+    public PackageInfoBean(long date, int usedCount, long usedTime, String packageName, String appName) {
         this.usedCount = usedCount;
         this.usedTime = usedTime;
         this.packageName = packageName;

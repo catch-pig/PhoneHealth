@@ -67,7 +67,6 @@ public class UseTimeDataManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d("testa", startTime + " " + endTime);
         mEventList = getEventList(startTime, endTime);
         mStatsList = getUsageList(startTime, endTime);
 
@@ -79,20 +78,20 @@ public class UseTimeDataManager {
         //获取数据之后，进行数据的处理
         mEventListChecked = getEventListChecked();
         refreshOneTimeDetailList(0);
-        refreshPackageInfoList();
+        refreshPackageInfoList(startTime);
         return 0;
     }
 
     //分类完成，初始化主界面所用到的数据
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void refreshPackageInfoList() {
+    public void refreshPackageInfoList(long date) {
         mPackageInfoBeanList.clear();
         for (int i = 0; i < mStatsList.size(); i++) {
 //            屏蔽系统应用
 //            if (!isSystemApp(mContext, mStatsList.get(i).getPackageName())) {
             PackageInfoBean info = null;
             try {
-                info = new PackageInfoBean(getLaunchCount(mStatsList.get(i)), calculateUseTime(mStatsList.get(i).getPackageName()), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName()));
+                info = new PackageInfoBean(date, getLaunchCount(mStatsList.get(i)), calculateUseTime(mStatsList.get(i).getPackageName()), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName()));
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -266,12 +265,12 @@ public class UseTimeDataManager {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ArrayList<PackageInfoBean> getPkgInfoListFromUsageList() throws IllegalAccessException {
+    public ArrayList<PackageInfoBean> getPkgInfoListFromUsageList(long date) throws IllegalAccessException {
         ArrayList<PackageInfoBean> result = new ArrayList<>();
 
         if (mStatsList != null && mStatsList.size() > 0) {
             for (int i = 0; i < mStatsList.size(); i++) {
-                result.add(new PackageInfoBean(getLaunchCount(mStatsList.get(i)), mStatsList.get(i).getTotalTimeInForeground(), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName())));
+                result.add(new PackageInfoBean(date, getLaunchCount(mStatsList.get(i)), mStatsList.get(i).getTotalTimeInForeground(), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName())));
             }
         }
         return result;
