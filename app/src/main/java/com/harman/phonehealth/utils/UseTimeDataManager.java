@@ -18,10 +18,6 @@ import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
-/**
- * 主要的数据操作的类
- * <p>
- */
 
 public class UseTimeDataManager {
     public static final String TAG = "UseTimeDataManager";
@@ -100,7 +96,7 @@ public class UseTimeDataManager {
         }
 
         for (int n = 0; n < mPackageInfoBeanList.size(); n++) {
-            String pkg = mPackageInfoBeanList.get(n).getmPackageName();
+            String pkg = mPackageInfoBeanList.get(n).getPackageName();
             for (int m = 0; m < mOneTimeDetailList.size(); m++) {
                 if (pkg.equals(mOneTimeDetailList.get(m).getPkgName())) {
                     mPackageInfoBeanList.get(n).addCount();
@@ -143,7 +139,6 @@ public class UseTimeDataManager {
             Name = "";
         }
         return Name;
-
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

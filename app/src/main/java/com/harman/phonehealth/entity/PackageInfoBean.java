@@ -2,52 +2,52 @@ package com.harman.phonehealth.entity;
 
 
 public class PackageInfoBean {
-    private int mUsedCount;
-    private long mUsedTime;
-    private String mPackageName;
-    private String mAppName;
+    private int usedCount;
+    private long usedTime;
+    private String packageName;
+    private String appName;
 
-    public PackageInfoBean(int mUsedCount, long mUsedTime, String mPackageName, String appName) {
-        this.mUsedCount = mUsedCount;
-        this.mUsedTime = mUsedTime;
-        this.mPackageName = mPackageName;
-        this.mAppName = appName;
+    public PackageInfoBean(int usedCount, long usedTime, String packageName, String appName) {
+        this.usedCount = usedCount;
+        this.usedTime = usedTime;
+        this.packageName = packageName;
+        this.appName = appName;
     }
 
     public void addCount() {
-        mUsedCount++;
+        usedCount++;
     }
 
-    public int getmUsedCount() {
-        return mUsedCount;
+    public int getUsedCount() {
+        return usedCount;
     }
 
-    public void setmUsedCount(int mUsedCount) {
-        this.mUsedCount = mUsedCount;
+    public void setUsedCount(int usedCount) {
+        this.usedCount = usedCount;
     }
 
-    public long getmUsedTime() {
-        return mUsedTime;
+    public long getUsedTime() {
+        return usedTime;
     }
 
-    public void setmUsedTime(long mUsedTime) {
-        this.mUsedTime = mUsedTime;
+    public void setUsedTime(long usedTime) {
+        this.usedTime = usedTime;
     }
 
-    public String getmPackageName() {
-        return mPackageName;
+    public String getPackageName() {
+        return packageName;
     }
 
-    public void setmPackageName(String mPackageName) {
-        this.mPackageName = mPackageName;
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
-    public String getmAppName() {
-        return mAppName;
+    public String getAppName() {
+        return appName;
     }
 
-    public void setmAppName(String mAppName) {
-        this.mAppName = mAppName;
+    public void setAppName(String appName) {
+        this.appName = appName;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PackageInfoBean {
         if (o == null) return false;
         if (this == o) return true;
         PackageInfoBean standardDetail = (PackageInfoBean) o;
-        if (standardDetail.getmPackageName().equals(this.mPackageName)) {
+        if (standardDetail.getPackageName().equals(this.packageName)) {
             return true;
         } else {
             return false;
@@ -64,16 +64,16 @@ public class PackageInfoBean {
 
     @Override
     public int hashCode() {
-        return (mPackageName + mUsedTime).hashCode();
+        return (packageName + usedTime).hashCode();
     }
 
     @Override
     public String toString() {
         return "PackageInfoBean{" +
-                "mUsedCount=" + mUsedCount +
-                ", mUsedTime=" + mUsedTime +
-                ", mPackageName='" + mPackageName + '\'' +
-                ", mAppName='" + mAppName + '\'' +
+                "usedCount=" + usedCount +
+                ", usedTime=" + usedTime +
+                ", packageName='" + packageName + '\'' +
+                ", appName='" + appName + '\'' +
                 '}';
     }
 }

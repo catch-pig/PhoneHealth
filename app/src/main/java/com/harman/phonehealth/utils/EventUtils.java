@@ -18,7 +18,7 @@ public class EventUtils {
     public static final String TAG = "EventUtils";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-
+    //getEvent form System
     @SuppressWarnings("ResourceType")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static ArrayList<UsageEvents.Event> getEventList(Context context, long startTime, long endTime) {
@@ -38,10 +38,10 @@ public class EventUtils {
                 mEventList.add(e);
             }
         }
-
         return mEventList;
     }
 
+    //get Usage from System
     @SuppressWarnings("ResourceType")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static ArrayList<UsageStats> getUsageList(Context context, long startTime, long endTime) {
