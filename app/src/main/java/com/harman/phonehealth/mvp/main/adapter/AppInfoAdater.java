@@ -32,11 +32,11 @@ public class AppInfoAdater extends RecyclerAdapter<PackageInfoBean, AppInfoAdate
 
     @Override
     public void bindViewHolder(ViewHolder holder, PackageInfoBean packageInfoBean, int position) {
-        Drawable drawable = IconUtils.getAppIcon(holder.mLogo.getContext(),packageInfoBean.getmPackageName());
+        Drawable drawable = IconUtils.getAppIcon(holder.mLogo.getContext(),packageInfoBean.getPackageName());
         holder.mLogo.setImageDrawable(drawable);
-        holder.mAppName.setText(packageInfoBean.getmAppName());
-        holder.mUseCount.setText(String.format("使用次数:%d次",packageInfoBean.getmUsedCount()));
-        long useTime = packageInfoBean.getmUsedTime()/(1000*60);
+        holder.mAppName.setText(packageInfoBean.getAppName());
+        holder.mUseCount.setText(String.format("使用次数:%d次",packageInfoBean.getUsedCount()));
+        long useTime = packageInfoBean.getUsedTime()/(1000*60);
         if(useTime<1){
             holder.mUseTime.setText("使用时长:<1分钟");
         }else if(useTime>60){

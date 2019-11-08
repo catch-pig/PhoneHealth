@@ -59,8 +59,8 @@ public class PackageInfo {
     public boolean equals(Object o) {
         if (o == null) return false;
         if (this == o) return true;
-        PackageInfoBean standardDetail = (PackageInfoBean) o;
-        if (standardDetail.getmPackageName().equals(this.packageName)) {
+        PackageInfo standardDetail = (PackageInfo) o;
+        if (standardDetail.getPackageName().equals(this.packageName)) {
             return true;
         } else {
             return false;
