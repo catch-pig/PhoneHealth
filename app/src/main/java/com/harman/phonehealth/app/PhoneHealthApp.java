@@ -28,14 +28,14 @@ public class PhoneHealthApp extends Application {
     }
 
     public void testDES(){
-        EnCodingUtils enCodingUtils = EnCodingUtils.getInstance(this);
-        enCodingUtils.init(EnCodingUtils.DES_MODE);
-        byte[] endata = enCodingUtils.DESEncode("hello world".getBytes());
-        Log.i("PHoneHealthAPP",new String(endata));
-
-        byte[] dedata = enCodingUtils.DESDecode(endata);
-
-        Log.i("PHoneHealthAPP",new String(dedata));
+//        EnCodingUtils enCodingUtils = EnCodingUtils.getInstance(this);
+//        enCodingUtils.init(EnCodingUtils.DES_MODE);
+//        byte[] endata = enCodingUtils.DESEncode("hello world".getBytes());
+//        Log.i("PHoneHealthAPP",new String(endata));
+//
+//        byte[] dedata = enCodingUtils.DESDecode(endata);
+//
+//        Log.i("PHoneHealthAPP",new String(dedata));
 
     }
 }
