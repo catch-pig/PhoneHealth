@@ -4,6 +4,7 @@ import com.harman.phonehealth.di.module.AppModule;
 import com.harman.phonehealth.di.module.DataModule;
 import com.harman.phonehealth.di.module.MainModule;
 import com.harman.phonehealth.di.module.SevenDayModule;
+import com.harman.phonehealth.di.module.StatisticsModule;
 import com.harman.phonehealth.di.module.TodayModule;
 
 import javax.inject.Singleton;
@@ -20,4 +21,6 @@ public interface AppComponent {
     TodayComponent todayComponent(TodayModule todayModule);
 
     SevenDayComponent sevenDayComponent(SevenDayModule sevenDayModule);
+
+    StatisticsComponent statisticsComponent(StatisticsModule statisticsModule);
 }
