@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".mvp.statistics.view.StatisticsActivity"/>
         <service android:name=".service.DataService">
             <intent-filter >
                 <action android:name="com.harman.phonehealthapp.dataservice" />

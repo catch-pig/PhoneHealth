@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.harman.phonehealth.R;
 import com.harman.phonehealth.app.PhoneHealthApp;
+import com.harman.phonehealth.base.adapter.RecyclerAdapter;
 import com.harman.phonehealth.base.fragment.BasePresenterFragment;
 import com.harman.phonehealth.di.module.TodayModule;
 import com.harman.phonehealth.mvp.main.adapter.AppInfoAdater;
+import com.harman.phonehealth.mvp.statistics.view.StatisticsActivity;
 import com.harman.phonehealth.mvp.today.TodayContract;
 import com.harman.phonehealth.service.DataService;
 
@@ -63,6 +65,12 @@ public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(appInfoAdater);
+        appInfoAdater.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void itemClick(int id, Object o, int position) {
+                startActivity(new Intent(getContext(), StatisticsActivity.class));
+            }
+        });
     }
 
     @Override
