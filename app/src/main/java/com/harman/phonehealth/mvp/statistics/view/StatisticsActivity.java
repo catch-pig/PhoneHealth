@@ -1,10 +1,9 @@
 package com.harman.phonehealth.mvp.statistics.view;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -25,15 +24,20 @@ import com.harman.phonehealth.entity.PackageInfoBean;
 import com.harman.phonehealth.mvp.statistics.StatisticsContract;
 import com.harman.phonehealth.util.RoomUtils;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -43,8 +47,15 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
     LineChart lcTest;
     @BindView(R.id.tvSevenCount)
     TextView tvSevenCount;
-    List<PackageInfoBean> mPackageInfoBeans;
-    String pakageName;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+    @BindView(R.id.lcTime)
+    LineChart lcTime;
+    @BindView(R.id.tvSevenTime)
+    TextView tvSevenTime;
+    Map<String,PackageInfoBean> mPackageInfoBeans;
+    String appName;
+
     //    private Typeface mTfRegular;
 //    private Typeface mTfLight;
 //    private LineChart lineChart;
@@ -52,6 +63,7 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
     protected void initParam() {
 
     }
+
     @Override
     protected void injectComponent() {
         PhoneHealthApp.getAppComponent().statisticsComponent(new StatisticsModule(this)).inject(this);
@@ -59,31 +71,9 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
 
     @Override
     protected void initView() {
-        pakageName = getIntent().getStringExtra("appName");
-        if(pakageName!=null&&!pakageName.trim().equals("")){
-             RoomUtils.getDataBase(getBaseActivity()).packageInfoBeanDao()
-                    .findPackageInfoWithPackageName(pakageName).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new SingleObserver<List<PackageInfoBean>>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onSuccess(List<PackageInfoBean> packageInfoBeans) {
-                            if(packageInfoBeans!=null&&packageInfoBeans.size()>0){
-                                mPackageInfoBeans = packageInfoBeans;
-                                tvSevenCount.setText(mPackageInfoBeans.get(0).getAppName()+":Seven-day Usage");
-                                initLineChart();
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Toast.makeText(getBaseContext(),e.getMessage(),Toast.LENGTH_LONG);
-                        }
-                    });
+        appName = getIntent().getStringExtra("appName");
+        if (appName != null && !appName.trim().equals("")) {
+            setDatas();
         }
     }
 
@@ -103,20 +93,66 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
+    long startTime;
+    private void setDatas() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final DateFormat dateFormat = new SimpleDateFormat("yyyy-M-dd");
+        long endTime = 0;
+        try {
+            endTime = dateFormat.parse(year + "-" + month + "-" + day).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        startTime = endTime - (1000 * 60 * 60 * 24 * 6);
+        RoomUtils.getDataBase(getBaseActivity())
+                .packageInfoBeanDao()
+                .findPackageInfoSomeAppSevenDayUsedTimeAsc(appName, startTime, endTime)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<PackageInfoBean>>() {
+                    @Override
+                    public void accept(List<PackageInfoBean> packageInfoBeans) throws Exception {
+                        tvSevenCount.setText("App Used Counts:");
+                        tvSevenTime.setText("App Used Time:");
+                        tvTitle.setText(packageInfoBeans.get(0).getAppName());
+                        mPackageInfoBeans = new HashMap<>();
+                        for(int j = 0;j<7;j++){
+                            long day = startTime+1000 * 60 * 60 * 24 * j;
+                            String data = dateFormat.format(new Date(day));
+                            for(int i = 0;i<packageInfoBeans.size();i++){
+                                long time = packageInfoBeans.get(i).getDate();
+                                if(time == day){
+                                    mPackageInfoBeans.put(data,packageInfoBeans.get(i));
+                                    break;
+                                }
+                            }
+                        }
+
+                         initCountLineChart();
+                        initTimeLineChart();
+                    }
+                });
+    }
+
     /**
      * 设置折线图的数据
      */
-    private void setLineChartData() {
+    private void setCountLineChartData() {
         //填充数据，在这里换成自己的数据源
         List<Entry> valsComp1 = new ArrayList<>();
 //        List<Entry> valsComp2 = new ArrayList<>();
-
-        for(int i = 0;i<7;i++){
-            PackageInfoBean packageInfoBean = mPackageInfoBeans.get(i);
-            if(i>=mPackageInfoBeans.size()){
-                valsComp1.add(new Entry(i,0));
-            }else {
-                valsComp1.add(new Entry(i,packageInfoBean.getUsedCount()));
+        final DateFormat dateFormat = new SimpleDateFormat("yyyy-M-dd");
+        for (int i = 0; i < 7; i++) {
+            String data = dateFormat.format(new Date(startTime+1000 * 60 * 60 * 24 * i));
+            PackageInfoBean packageInfoBean = mPackageInfoBeans.get(data);
+            if (packageInfoBean == null) {
+                valsComp1.add(new Entry(i, 0));
+            } else {
+                valsComp1.add(new Entry(i, packageInfoBean.getUsedCount()));
             }
 
         }
@@ -129,7 +165,7 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         //这里，每重新new一个LineDataSet，相当于重新画一组折线
         //每一个LineDataSet相当于一组折线。比如:这里有两个LineDataSet：setComp1，setComp2。
         //则在图像上会有两条折线图，分别表示公司1 和 公司2 的情况.还可以设置更多
-        LineDataSet setComp1 = new LineDataSet(valsComp1,"使用次数");
+        LineDataSet setComp1 = new LineDataSet(valsComp1, "使用次数");
         setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp1.setColor(getResources().getColor(R.color.colorPrimary));
         setComp1.setDrawCircles(false);
@@ -150,10 +186,46 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         lcTest.setData(lineData);
         lcTest.invalidate();
     }
+
+    private void setTimeLineChartData() {
+        //填充数据，在这里换成自己的数据源
+        List<Entry> valsComp1 = new ArrayList<>();
+        final DateFormat dateFormat = new SimpleDateFormat("yyyy-M-dd");
+        for (int i = 0; i < 7; i++) {
+            String data = dateFormat.format(new Date(startTime+1000 * 60 * 60 * 24 * i));
+            PackageInfoBean packageInfoBean = mPackageInfoBeans.get(data);
+            if (packageInfoBean == null) {
+                valsComp1.add(new Entry(i, 0));
+            } else {
+                long useTime = packageInfoBean.getUsedTime();
+                float time = Long.valueOf(useTime).floatValue() / 1000 / 60;
+                DecimalFormat fnum = new DecimalFormat("##0.0");
+                float dd = Float.parseFloat(fnum.format(time));
+                valsComp1.add(new Entry(Integer.valueOf(i).floatValue(),dd));
+            }
+
+        }
+
+        //这里，每重新new一个LineDataSet，相当于重新画一组折线
+        //每一个LineDataSet相当于一组折线。比如:这里有两个LineDataSet：setComp1，setComp2。
+        //则在图像上会有两条折线图，分别表示公司1 和 公司2 的情况.还可以设置更多
+        LineDataSet setComp1 = new LineDataSet(valsComp1, "Used Time(unit:mimute)");
+        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setComp1.setColor(getResources().getColor(R.color.colorPrimary));
+        setComp1.setDrawCircles(false);
+        setComp1.setMode(LineDataSet.Mode.LINEAR);
+        List<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(setComp1);
+        LineData lineData = new LineData(dataSets);
+
+        lcTime.setData(lineData);
+        lcTime.invalidate();
+    }
+
     /**
      * 初始化折线图控件属性
      */
-    private void initLineChart() {
+    private void initCountLineChart() {
         lcTest.setOnChartValueSelectedListener(this);
         lcTest.getDescription().setEnabled(false);
         lcTest.setBackgroundColor(Color.WHITE);
@@ -178,7 +250,35 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
 
         lcTest.getAxisRight().setEnabled(false);
 
-        setLineChartData();
+        setCountLineChartData();
+    }
+
+    private void initTimeLineChart() {
+        lcTime.setOnChartValueSelectedListener(this);
+        lcTime.getDescription().setEnabled(false);
+        lcTime.setBackgroundColor(Color.WHITE);
+
+        //自定义适配器，适配于X轴
+        IAxisValueFormatter xAxisFormatter = new XAxisValueFormatter();
+
+        XAxis xAxis = lcTime.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1f);
+        xAxis.setValueFormatter(xAxisFormatter);
+
+        //自定义适配器，适配于Y轴
+        IAxisValueFormatter custom = new MyAxisValueFormatter();
+
+        YAxis leftAxis = lcTime.getAxisLeft();
+        leftAxis.setLabelCount(8, false);
+        leftAxis.setValueFormatter(custom);
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setSpaceTop(15f);
+        leftAxis.setAxisMinimum(0f);
+
+        lcTime.getAxisRight().setEnabled(false);
+
+        setTimeLineChartData();
     }
 
     private float getRandom(float range, float startsfrom) {
@@ -196,18 +296,25 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
     }
 
     public class XAxisValueFormatter implements IAxisValueFormatter {
-        private String[] xStrs = new String[]{"Mon", "Tus", "Wen", "Thu","Fri","Sta","Sun"};
+
 
         @Override
 
         public String getFormattedValue(float value, AxisBase axis) {
             int position = (int) value;
+            Calendar calendar = Calendar.getInstance();
+            int month = calendar.get(Calendar.MONTH) + 1;
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
             if (position >= 7) {
                 position = 0;
             }
-            return xStrs[position];
+            if (position == 6) {
+                return "Today";
+            }
+            return "" + month + "-" + (day - (6 - position));
         }
     }
+
     public class MyAxisValueFormatter implements IAxisValueFormatter {
         private DecimalFormat mFormat;
 
@@ -220,6 +327,7 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
             return mFormat.format(value);
         }
     }
+
     public class DecimalFormatter implements IAxisValueFormatter {
         private DecimalFormat format;
 
@@ -231,4 +339,5 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         public String getFormattedValue(float value, AxisBase axis) {
             return format.format(value) + "$";
         }
-    }}
+    }
+}

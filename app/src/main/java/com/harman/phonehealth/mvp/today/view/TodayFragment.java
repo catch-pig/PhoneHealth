@@ -70,7 +70,7 @@ public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter
             @Override
             public void itemClick(int id, Object o, int position) {
                 PackageInfoBean data = appInfoAdater.getData().get(position);
-                String appName = data.getPackageName();
+                String appName = data.getAppName();
                 Intent intent = new Intent(getContext(),StatisticsActivity.class);
                 intent.putExtra("appName",appName);
                 startActivity(intent);
