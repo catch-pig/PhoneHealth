@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="HammerFontGroup_title_tv">
+        <item name="android:textSize">@dimen/font_40</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="HammerFontGroup_detail_tv">
+        <item name="android:textSize">@dimen/font_36</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>

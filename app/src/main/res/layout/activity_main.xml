@@ -4,17 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_dark_background"
     android:orientation="vertical"
     tools:context=".mvp.main.view.MainActivity">
+
+    <TextView
+        android:id="@+id/main_scan_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/HammerFontGroup_detail_tv"
+        android:layout_gravity="center_horizontal"
+        android:drawableTop="@mipmap/ic_launcher_foreground"
+        android:gravity="center_horizontal"
+        android:text="@string/scan" />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        app:tabIndicatorHeight="3dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/dimen_30"
         app:tabIndicatorColor="@color/colorPrimary"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        android:layout_height="40dp">
+        app:tabIndicatorHeight="3dp"
+        app:tabSelectedTextColor="@color/colorPrimary">
 
     </com.google.android.material.tabs.TabLayout>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
