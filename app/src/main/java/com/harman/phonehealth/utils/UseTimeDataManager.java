@@ -11,12 +11,16 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.harman.phonehealth.entity.OneTimeDetails;
 import com.harman.phonehealth.entity.PackageInfoBean;
 
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class UseTimeDataManager {
@@ -81,7 +85,13 @@ public class UseTimeDataManager {
 //            if (!isSystemApp(mContext, mStatsList.get(i).getPackageName())) {
             PackageInfoBean info = null;
             try {
-                info = new PackageInfoBean(date, getLaunchCount(mStatsList.get(i)), calculateUseTime(mStatsList.get(i).getPackageName()), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName()));
+                Map<String, Double> classMap = new HashMap<>();
+                for (int k = 0; k < mEventListChecked.size(); k++) {
+                    if (mStatsList.get(i).getPackageName().equals(mEventListChecked.get(k).getPackageName())) {
+                        classMap.merge(mEventListChecked.get(k).getClassName(), 0.5, Double::sum);
+                    }
+                }
+                info = new PackageInfoBean(JsonUtil.mapToJson(classMap), date, getLaunchCount(mStatsList.get(i)), calculateUseTime(mStatsList.get(i).getPackageName()), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName()));
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -245,7 +255,7 @@ public class UseTimeDataManager {
 
         if (mStatsList != null && mStatsList.size() > 0) {
             for (int i = 0; i < mStatsList.size(); i++) {
-                result.add(new PackageInfoBean(date, getLaunchCount(mStatsList.get(i)), mStatsList.get(i).getTotalTimeInForeground(), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName())));
+                result.add(new PackageInfoBean(null, date, getLaunchCount(mStatsList.get(i)), mStatsList.get(i).getTotalTimeInForeground(), mStatsList.get(i).getPackageName(), getApplicationNameByPackageName(mContext, mStatsList.get(i).getPackageName())));
             }
         }
         return result;

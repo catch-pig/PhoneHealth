@@ -3,6 +3,8 @@ package com.harman.phonehealth.database.entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Map;
+
 @Entity
 public class PackageInfo {
 
@@ -12,6 +14,7 @@ public class PackageInfo {
     private long usedTime;
     private String packageName;
     private String appName;
+    private String classMap;
 
     public int getId() {
         return id;
@@ -74,5 +77,13 @@ public class PackageInfo {
                 ", mPackageName='" + packageName + '\'' +
                 ", mAppName='" + appName + '\'' +
                 '}';
+    }
+
+    public String getClassMap() {
+        return classMap;
+    }
+
+    public void setClassMap(String classMap) {
+        this.classMap = classMap;
     }
 }

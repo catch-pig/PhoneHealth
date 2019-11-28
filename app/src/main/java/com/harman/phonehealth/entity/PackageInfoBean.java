@@ -12,8 +12,10 @@ public class PackageInfoBean {
     private String packageName;
     private String appName;
     private long date;
+    private String classMap;
 
-    public PackageInfoBean(long date, int usedCount, long usedTime, String packageName, String appName) {
+    public PackageInfoBean(String classMap, long date, int usedCount, long usedTime, String packageName, String appName) {
+        this.classMap = classMap;
         this.date = date;
         this.usedCount = usedCount;
         this.usedTime = usedTime;
@@ -94,5 +96,13 @@ public class PackageInfoBean {
                 ", packageName='" + packageName + '\'' +
                 ", appName='" + appName + '\'' +
                 '}';
+    }
+
+    public String getClassMap() {
+        return classMap;
+    }
+
+    public void setClassMap(String classMap) {
+        this.classMap = classMap;
     }
 }

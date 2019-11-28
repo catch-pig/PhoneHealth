@@ -51,10 +51,10 @@ public interface PackageInfoBeanDAO {
     @Query("SELECT * FROM PackageInfoBean WHERE date BETWEEN :start AND :end  and appName =:appName order by usedTime asc")
     Single<List<PackageInfoBean>> findPackageInfoSomeAppSevenDayUsedTimeAsc(String appName, long start, long end);
 
-    @Query("SELECT id,sum(usedCount) as usedCount,sum(usedTime) as usedTime,packageName,appName,date FROM PackageInfoBean WHERE date BETWEEN :start AND :end GROUP BY appName order by sum(usedTime) desc ")
+    @Query("SELECT id,sum(usedCount) as usedCount,sum(usedTime) as usedTime,packageName,appName,date,classMap FROM PackageInfoBean WHERE date BETWEEN :start AND :end GROUP BY appName order by sum(usedTime) desc ")
     Single<List<PackageInfoBean>> findPackageInfoSomeAppSomeDayByUsedTimeAsc(long start, long end);
 
-    @Query("SELECT id,sum(usedCount) as usedCount,usedTime,packageName,appName,date FROM PackageInfoBean WHERE date BETWEEN :start AND :end GROUP BY appName order by sum(usedCount) asc ")
+    @Query("SELECT id,sum(usedCount) as usedCount,usedTime,packageName,appName,date,classMap FROM PackageInfoBean WHERE date BETWEEN :start AND :end GROUP BY appName order by sum(usedCount) asc ")
     Single<List<PackageInfoBean>> findPackageInfoSomeAppSevenDayByUseCountAsc(long start, long end);
 
 }

@@ -23,6 +23,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -33,18 +37,20 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     api "com.google.dagger:dagger:$dagger_version"
-    api "com.google.dagger:dagger-android-support:$dagger_version" // if you use the support libraries
+    api "com.google.dagger:dagger-android-support:$dagger_version"
+    // if you use the support libraries
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
 
     implementation "android.arch.persistence.room:runtime:$room_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$room_version" // use kapt for Kotlin
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    // use kapt for Kotlin
 
     // optional - RxJava support for Room
     implementation "android.arch.persistence.room:rxjava2:$room_version"
 
     // optional - Guava support for Room, including Optional and ListenableFuture
-    implementation ("android.arch.persistence.room:guava:$room_version",{
+    implementation("android.arch.persistence.room:guava:$room_version", {
         exclude group: 'com.google.code.findbugs'
     })
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -59,4 +65,5 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.alibaba:fastjson:1.2.61'
 }
