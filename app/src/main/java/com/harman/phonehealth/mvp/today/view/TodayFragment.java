@@ -14,6 +14,7 @@ import com.harman.phonehealth.app.PhoneHealthApp;
 import com.harman.phonehealth.base.adapter.RecyclerAdapter;
 import com.harman.phonehealth.base.fragment.BasePresenterFragment;
 import com.harman.phonehealth.di.module.TodayModule;
+import com.harman.phonehealth.entity.PackageInfoBean;
 import com.harman.phonehealth.mvp.main.adapter.AppInfoAdater;
 import com.harman.phonehealth.mvp.statistics.view.StatisticsActivity;
 import com.harman.phonehealth.mvp.today.TodayContract;
@@ -60,7 +61,7 @@ public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter
     }
 
     @Override
-    public void initAdapter(AppInfoAdater appInfoAdater) {
+    public void initAdapter(final AppInfoAdater appInfoAdater) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -68,7 +69,11 @@ public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter
         appInfoAdater.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void itemClick(int id, Object o, int position) {
-                startActivity(new Intent(getContext(), StatisticsActivity.class));
+                PackageInfoBean data = appInfoAdater.getData().get(position);
+                String appName = data.getAppName();
+                Intent intent = new Intent(getContext(),StatisticsActivity.class);
+                intent.putExtra("appName",appName);
+                startActivity(intent);
             }
         });
     }
