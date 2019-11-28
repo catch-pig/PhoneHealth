@@ -70,7 +70,7 @@ public class SevenDayFragment extends BasePresenterFragment<SevenDayContract.Pre
             @Override
             public void itemClick(int id, Object o, int position) {
                 PackageInfoBean data = appInfoAdater.getData().get(position);
-                String appName = data.getAppName();
+                String appName = data.getPackageName();
                 Intent intent = new Intent(getContext(), StatisticsActivity.class);
                 intent.putExtra("appName",appName);
                 startActivity(intent);
