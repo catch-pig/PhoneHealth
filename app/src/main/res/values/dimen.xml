@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="font_30">30ps</dimen>
-    <dimen name="font_32">32ps</dimen>
-    <dimen name="font_34">34ps</dimen>
-    <dimen name="font_36">36ps</dimen>
-    <dimen name="font_40">40ps</dimen>
+    <dimen name="font_30">30dp</dimen>
+    <dimen name="font_32">32dp</dimen>
+    <dimen name="font_34">34dp</dimen>
+    <dimen name="font_36">36dp</dimen>
+    <dimen name="font_40">40dp</dimen>
     <dimen name="dimen_1">1dp</dimen>
     <dimen name="dimen_8">8dp</dimen>
     <dimen name="dimen_10">10dp</dimen>
