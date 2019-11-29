@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,9 +63,10 @@ public class SevenDayFragment extends BasePresenterFragment<SevenDayContract.Pre
 
     @Override
     public void initAdapter(final AppInfoAdater appInfoAdater) {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(appInfoAdater);
         appInfoAdater.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
@@ -72,7 +74,7 @@ public class SevenDayFragment extends BasePresenterFragment<SevenDayContract.Pre
                 PackageInfoBean data = appInfoAdater.getData().get(position);
                 String appName = data.getAppName();
                 Intent intent = new Intent(getContext(), StatisticsActivity.class);
-                intent.putExtra("appName",appName);
+                intent.putExtra("appName", appName);
                 startActivity(intent);
             }
         });

@@ -4,17 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginRight="140dp"
     android:orientation="vertical"
     tools:context=".mvp.main.view.MainActivity">
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        app:tabIndicatorHeight="3dp"
+        android:layout_height="80dp"
         app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorHeight="3dp"
         app:tabSelectedTextColor="@color/colorPrimary"
-        android:layout_height="40dp">
+        app:tabTextAppearance="@style/tab_layout_style"
+        app:tabTextColor="@color/colorPrimary">
 
     </com.google.android.material.tabs.TabLayout>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
