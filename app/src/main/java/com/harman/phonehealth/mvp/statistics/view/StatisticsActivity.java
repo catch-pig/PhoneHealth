@@ -1,14 +1,18 @@
 package com.harman.phonehealth.mvp.statistics.view;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -22,6 +26,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.harman.phonehealth.R;
 import com.harman.phonehealth.app.PhoneHealthApp;
 import com.harman.phonehealth.base.BasePresenterActivity;
@@ -66,6 +71,8 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
     TextView tvMoreUsed;
     @BindView(R.id.lcMoreUsed)
     BarChart lcMoreUsed;
+    @BindView(R.id.ivBack)
+    ImageView ivBack;
     Map<String, PackageInfoBean> mPackageInfoBeans;
     String appName;
     Map<String, Double> allmap = new HashMap<String, Double>();
@@ -91,6 +98,12 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         if (appName != null && !appName.trim().equals("")) {
             setDatas();
         }
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -199,7 +212,8 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         // scaling can now only be done on x- and y-axis separately
         lcMoreUsed.setPinchZoom(false);
         lcMoreUsed.setDrawGridBackground(false);
-
+//        lcMoreUsed.setDragEnabled(false);
+//        lcMoreUsed.setTouchEnabled(false);
         //填充数据，在这里换成自己的数据源
         List<BarEntry> valsComp1 = new ArrayList<>();
 //        List<Entry> valsComp2 = new ArrayList<>();
@@ -239,7 +253,6 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         xAxis.setGranularity(1f);
         xAxis.setValueFormatter(xAxisFormatter);
 
-
         //自定义坐标轴适配器，配置在Y轴。leftAxis.setValueFormatter(custom);
         IAxisValueFormatter custom = new MyAxisValueFormatter();
 
@@ -274,10 +287,10 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         legend.setFormLineWidth(10f);
 
 //        //如果点击柱形图，会弹出pop提示框.XYMarkerView为自定义弹出框
-//        XYMarkerView mv = new XYMarkerView(this, xAxisFormatter);
-//        mv.setChartView(mChart);
-//        mChart.setMarker(mv);
-//        setBarChartData();
+        XYMarkerView mv = new XYMarkerView(this, xAxisFormatter);
+        mv.setChartView(lcMoreUsed);
+        lcMoreUsed.setMarker(mv);
+        lcMoreUsed.animateY(2000);
         lcMoreUsed.setData(lineData);
         lcMoreUsed.invalidate();
     }
@@ -326,7 +339,9 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
 //        dataSets.add(setComp2);
 
         LineData lineData = new LineData(dataSets);
-
+        lcTest.setDragEnabled(false);
+        lcTest.setTouchEnabled(false);
+        lcTest.animateY(2000);
         lcTest.setData(lineData);
         lcTest.invalidate();
     }
@@ -361,7 +376,9 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         List<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(setComp1);
         LineData lineData = new LineData(dataSets);
-
+        lcTime.setDragEnabled(false);
+        lcTime.setTouchEnabled(false);
+        lcTime.animateY(2000);
         lcTime.setData(lineData);
         lcTime.invalidate();
     }
@@ -468,7 +485,7 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
-            return mFormat.format(value) + " $";
+            return mFormat.format(value);
         }
     }
 
@@ -481,7 +498,7 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
-            return format.format(value) + "$";
+            return format.format(value);
         }
     }
 
@@ -495,16 +512,40 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
             Calendar calendar = Calendar.getInstance();
             int month = calendar.get(Calendar.MONTH) + 1;
             int day = calendar.get(Calendar.DAY_OF_MONTH);
-            if (position >= 3) {
+            if (position >= 7) {
                 position = 0;
             }
-            if (position == 0) {
-                return "First";
-            } else if (position == 1) {
-                return "Second";
-            } else {
-                return "Third";
+            return "" + (position + 1) + "th";
+        }
+    }
+
+    public class XYMarkerView extends MarkerView {
+        private TextView tvContent;
+        private IAxisValueFormatter xAxisValueFormatter;
+        private DecimalFormat format;
+
+        public XYMarkerView(Context context, IAxisValueFormatter xAxisValueFormatter) {
+            super(context, R.layout.chart_text_view);
+            this.xAxisValueFormatter = xAxisValueFormatter;
+            tvContent = findViewById(R.id.tvActicity);
+        }
+
+        @Override
+        public void refreshContent(Entry e, Highlight highlight) {
+            int position = Float.valueOf(e.getX()).intValue();
+            String text = "No Data";
+            if (position < jsonBeanList.size()) {
+                String texts = jsonBeanList.get(position).getName();
+                int strPosition = texts.lastIndexOf(".");
+                text = texts.substring(strPosition+1);
             }
+            tvContent.setText(text);
+            super.refreshContent(e, highlight);
+        }
+
+        @Override
+        public MPPointF getOffset() {
+            return new MPPointF(-(getWidth() / 2), -getHeight());
         }
     }
 }
