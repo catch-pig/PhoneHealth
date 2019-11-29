@@ -32,6 +32,7 @@ public class AppInfoAdater extends RecyclerAdapter<PackageInfoBean, AppInfoAdate
         holder.mLogo.setImageDrawable(drawable);
         holder.mAppName.setText(packageInfoBean.getAppName());
         holder.mUseCount.setText(String.format("Use Count:%d", packageInfoBean.getUsedCount()));
+        holder.rankText.setText("No." + (position + 1));
         long useTime = packageInfoBean.getUsedTime() / (1000 * 60);
         if (useTime < 1) {
             holder.mUseTime.setText("Use Time:less than 1 minute");
@@ -53,6 +54,9 @@ public class AppInfoAdater extends RecyclerAdapter<PackageInfoBean, AppInfoAdate
         TextView mUseTime;
         @BindView(R.id.user_count)
         TextView mUseCount;
+        @BindView(R.id.rank)
+        TextView rankText;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
