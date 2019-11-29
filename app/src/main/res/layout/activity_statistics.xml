@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:layout_marginRight="150dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:background="@color/colorPrimary">
         <ImageView
             android:id="@+id/ivBack"
@@ -31,45 +32,67 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvSevenCount"
-                android:textSize="22sp"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"/>
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/lcTest"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvSevenTime"
-                android:textSize="22sp"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"/>
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/lcTime"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvSevenCount"
+                        android:textSize="22sp"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"/>
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lcTest"
+                        android:layout_width="150dp"
+                        android:layout_height="200dp"
+                        android:layout_margin="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvSevenTime"
+                        android:textSize="22sp"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"/>
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lcTime"
+                        android:layout_width="150dp"
+                        android:layout_height="200dp"
+                        android:layout_margin="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvMoreUsed"
-                android:textSize="22sp"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"/>
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/lcMoreUsed"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="10dp"/>
+                android:gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvMoreUsed"
+                    android:textSize="22sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"/>
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/lcMoreUsed"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:layout_margin="10dp"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
