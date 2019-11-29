@@ -62,6 +62,12 @@ public class TodayFragment extends BasePresenterFragment<TodayContract.Presenter
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.loadData();
+    }
+
+    @Override
     public void initAdapter(final AppInfoAdater appInfoAdater) {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),3);
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

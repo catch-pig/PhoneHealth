@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -74,6 +75,8 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
     BarChart lcMoreUsed;
     @BindView(R.id.ivBack)
     ImageView ivBack;
+    @BindView(R.id.linear_re)
+    LinearLayout linearLayout;
     Map<String, PackageInfoBean> mPackageInfoBeans;
     String appName;
     Map<String, Double> allmap = new HashMap<String, Double>();
@@ -105,6 +108,9 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
                 finish();
             }
         });
+        if (appName.equals("UsbMedia")) {
+            linearLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -310,7 +316,7 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
             String data = dateFormat.format(new Date(startTime + 1000 * 60 * 60 * 24 * i));
             PackageInfoBean packageInfoBean = mPackageInfoBeans.get(data);
             if (packageInfoBean == null) {
-                Random r = new Random(1);
+                Random r = new Random();
                 int ran1 = r.nextInt(100);
                 valsComp1.add(new Entry(i, ran1));
             } else {
@@ -360,7 +366,7 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
             String data = dateFormat.format(new Date(startTime + 1000 * 60 * 60 * 24 * i));
             PackageInfoBean packageInfoBean = mPackageInfoBeans.get(data);
             if (packageInfoBean == null) {
-                Random r = new Random(1);
+                Random r = new Random();
                 int ran1 = r.nextInt(240);
                 valsComp1.add(new Entry(i, ran1));
             } else {

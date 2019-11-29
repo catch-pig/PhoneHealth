@@ -57,6 +57,12 @@ public class SevenDayFragment extends BasePresenterFragment<SevenDayContract.Pre
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.loadData();
+    }
+
+    @Override
     protected int layoutId() {
         return R.layout.activity_app_info;
     }

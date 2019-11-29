@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginRight="135dp"
+    android:layout_marginRight="134dp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -86,89 +86,51 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp" />
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/linear_re"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="22sp"
-                android:text="Personalized Recommendation:"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/lable_bg"
-                    android:textColor="@color/white"
-                    android:text="Entertainment applications"
-                    android:textSize="18sp"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:layout_margin="20dp"/>
-                <TextView
-                    android:layout_width="0dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="Personalized Recommendation:"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="22sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/lable_bg"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="Tool applications"
-                    android:layout_margin="20dp"
-                    android:textSize="18sp"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/lable_bg"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="Service applications"
-                    android:layout_margin="20dp"
-                    android:textSize="18sp"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/lable_bg"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="Multimedia applications"
-                    android:layout_margin="20dp"
-                    android:textSize="18sp"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/lable_bg"
-                    android:textColor="@color/white"
-                    android:text="More applications"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:layout_margin="20dp"
-                    android:textSize="18sp"/>
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/net" />
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/kuwo" />
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/kugou" />
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
