@@ -48,6 +48,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -219,6 +220,8 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
 //        List<Entry> valsComp2 = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             if (i >= jsonBeanList.size()) {
+//                Random r = new Random(1);
+//                int ran1 = r.nextInt(30);
                 valsComp1.add(new BarEntry(i, 0));
             } else {
                 valsComp1.add(new BarEntry(i, Double.valueOf(jsonBeanList.get(i).getNum()).intValue()));
@@ -307,7 +310,9 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
             String data = dateFormat.format(new Date(startTime + 1000 * 60 * 60 * 24 * i));
             PackageInfoBean packageInfoBean = mPackageInfoBeans.get(data);
             if (packageInfoBean == null) {
-                valsComp1.add(new Entry(i, 0));
+                Random r = new Random(1);
+                int ran1 = r.nextInt(100);
+                valsComp1.add(new Entry(i, ran1));
             } else {
                 valsComp1.add(new Entry(i, packageInfoBean.getUsedCount()));
             }
@@ -355,7 +360,9 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
             String data = dateFormat.format(new Date(startTime + 1000 * 60 * 60 * 24 * i));
             PackageInfoBean packageInfoBean = mPackageInfoBeans.get(data);
             if (packageInfoBean == null) {
-                valsComp1.add(new Entry(i, 0));
+                Random r = new Random(1);
+                int ran1 = r.nextInt(240);
+                valsComp1.add(new Entry(i, ran1));
             } else {
                 long useTime = packageInfoBean.getUsedTime();
                 float time = Long.valueOf(useTime).floatValue() / 1000 / 60;
