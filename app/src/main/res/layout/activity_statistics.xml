@@ -85,6 +85,56 @@
                 android:layout_height="350dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/lable_bg"
+                    android:textColor="@color/white"
+                    android:text="Entertainment applications"
+                    android:textSize="24sp"
+                    android:layout_margin="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/lable_bg"
+                    android:textColor="@color/white"
+                    android:text="Tool applications"
+                    android:layout_margin="20dp"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/lable_bg"
+                    android:textColor="@color/white"
+                    android:text="Service applications"
+                    android:layout_margin="20dp"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/lable_bg"
+                    android:textColor="@color/white"
+                    android:text="Multimedia applications"
+                    android:layout_margin="20dp"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/lable_bg"
+                    android:textColor="@color/white"
+                    android:text="More applications"
+                    android:layout_margin="20dp"
+                    android:textSize="24sp"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
