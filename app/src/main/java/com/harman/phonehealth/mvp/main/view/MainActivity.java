@@ -41,23 +41,23 @@ public class MainActivity extends BasePresenterActivity<MainContract.Presenter> 
 
     @Override
     protected void initView() {
-        if (!PermissionUtils.checkUsagePermission(this)) {
-            builder = new AlertDialog.Builder(this).setTitle("Request Permission")
-                    .setMessage("The application needs Usage State Permission").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-                            startActivityForResult(intent, REQUEST_USAGE_ACCESS);
-                        }
-                    }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(MainActivity.this, "Please reopen the application to request permission", Toast.LENGTH_LONG).show();
-                            dialogInterface.dismiss();
-                        }
-                    }).setCancelable(false);
-            builder.create().show();
-        }
+//        if (!PermissionUtils.checkUsagePermission(this)) {
+//            builder = new AlertDialog.Builder(this).setTitle("Request Permission")
+//                    .setMessage("The application needs Usage State Permission").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+//                            startActivityForResult(intent, REQUEST_USAGE_ACCESS);
+//                        }
+//                    }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            Toast.makeText(MainActivity.this, "Please reopen the application to request permission", Toast.LENGTH_LONG).show();
+//                            dialogInterface.dismiss();
+//                        }
+//                    }).setCancelable(false);
+//            builder.create().show();
+//        }
     }
 
     @Override
