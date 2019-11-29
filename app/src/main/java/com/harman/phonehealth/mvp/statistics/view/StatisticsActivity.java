@@ -147,8 +147,8 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
                     @Override
                     public void accept(List<PackageInfoBean> packageInfoBeans) throws Exception {
                         tvSevenCount.setText("App Used Counts:");
-                        tvSevenTime.setText("App Used Time:");
-                        tvMoreUsed.setText("Most Used App Activitys:");
+                        tvSevenTime.setText("App Used Time(minute):");
+                        tvMoreUsed.setText("Most Used App Activities:");
                         tvTitle.setText(packageInfoBeans.get(0).getAppName());
                         mPackageInfoBeans = new HashMap<>();
                         for (int j = 0; j < 7; j++) {
@@ -218,13 +218,13 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         List<BarEntry> valsComp1 = new ArrayList<>();
 //        List<Entry> valsComp2 = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
-            if(i>=jsonBeanList.size()){
-                valsComp1.add(new BarEntry(i,0));
-            }else {
+            if (i >= jsonBeanList.size()) {
+                valsComp1.add(new BarEntry(i, 0));
+            } else {
                 valsComp1.add(new BarEntry(i, Double.valueOf(jsonBeanList.get(i).getNum()).intValue()));
             }
         }
-        BarDataSet setComp1 = new BarDataSet(valsComp1, "Used Counts");
+        BarDataSet setComp1 = new BarDataSet(valsComp1, null);
         setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp1.setColor(getResources().getColor(R.color.colorPrimary));
         setComp1.setBarBorderWidth(20);
@@ -322,10 +322,11 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         //这里，每重新new一个LineDataSet，相当于重新画一组折线
         //每一个LineDataSet相当于一组折线。比如:这里有两个LineDataSet：setComp1，setComp2。
         //则在图像上会有两条折线图，分别表示公司1 和 公司2 的情况.还可以设置更多
-        LineDataSet setComp1 = new LineDataSet(valsComp1, "Used Counts");
+        LineDataSet setComp1 = new LineDataSet(valsComp1, null);
         setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp1.setColor(getResources().getColor(R.color.colorPrimary));
         setComp1.setDrawCircles(false);
+        setComp1.setValueTextSize(20);
         setComp1.setMode(LineDataSet.Mode.LINEAR);
 
 //        LineDataSet setComp2 = new LineDataSet(valsComp2, "Company 2 ");
@@ -368,7 +369,7 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         //这里，每重新new一个LineDataSet，相当于重新画一组折线
         //每一个LineDataSet相当于一组折线。比如:这里有两个LineDataSet：setComp1，setComp2。
         //则在图像上会有两条折线图，分别表示公司1 和 公司2 的情况.还可以设置更多
-        LineDataSet setComp1 = new LineDataSet(valsComp1, "Used Time(unit:mimute)");
+        LineDataSet setComp1 = new LineDataSet(valsComp1, null);
         setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp1.setColor(getResources().getColor(R.color.colorPrimary));
         setComp1.setDrawCircles(false);
@@ -389,7 +390,6 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
     private void initCountLineChart() {
         lcTest.setOnChartValueSelectedListener(this);
         lcTest.getDescription().setEnabled(false);
-        lcTest.setBackgroundColor(Color.WHITE);
 
         //自定义适配器，适配于X轴
         IAxisValueFormatter xAxisFormatter = new XAxisValueFormatter();
@@ -417,7 +417,6 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
     private void initTimeLineChart() {
         lcTime.setOnChartValueSelectedListener(this);
         lcTime.getDescription().setEnabled(false);
-        lcTime.setBackgroundColor(Color.WHITE);
 
         //自定义适配器，适配于X轴
         IAxisValueFormatter xAxisFormatter = new XAxisValueFormatter();
@@ -431,7 +430,7 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
         IAxisValueFormatter custom = new MyAxisValueFormatter();
 
         YAxis leftAxis = lcTime.getAxisLeft();
-        leftAxis.setLabelCount(8, false);
+//        leftAxis.setLabelCount(8, false);
         leftAxis.setValueFormatter(custom);
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setSpaceTop(15f);
@@ -537,7 +536,7 @@ public class StatisticsActivity extends BasePresenterActivity<StatisticsContract
             if (position < jsonBeanList.size()) {
                 String texts = jsonBeanList.get(position).getName();
                 int strPosition = texts.lastIndexOf(".");
-                text = texts.substring(strPosition+1);
+                text = texts.substring(strPosition + 1);
             }
             tvContent.setText(text);
             super.refreshContent(e, highlight);
