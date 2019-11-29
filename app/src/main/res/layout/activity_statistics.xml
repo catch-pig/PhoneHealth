@@ -85,6 +85,16 @@
                 android:layout_height="350dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="22sp"
+                android:text="Personalized Recommendation:"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +106,12 @@
                     android:background="@drawable/lable_bg"
                     android:textColor="@color/white"
                     android:text="Entertainment applications"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:layout_margin="20dp"/>
                 <TextView
                     android:layout_width="0dp"
@@ -104,27 +119,42 @@
                     android:layout_weight="1"
                     android:background="@drawable/lable_bg"
                     android:textColor="@color/white"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:text="Tool applications"
                     android:layout_margin="20dp"
-                    android:textSize="24sp"/>
+                    android:textSize="18sp"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/lable_bg"
                     android:textColor="@color/white"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:text="Service applications"
                     android:layout_margin="20dp"
-                    android:textSize="24sp"/>
+                    android:textSize="18sp"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/lable_bg"
                     android:textColor="@color/white"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:text="Multimedia applications"
                     android:layout_margin="20dp"
-                    android:textSize="24sp"/>
+                    android:textSize="18sp"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -132,8 +162,13 @@
                     android:background="@drawable/lable_bg"
                     android:textColor="@color/white"
                     android:text="More applications"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:layout_margin="20dp"
-                    android:textSize="24sp"/>
+                    android:textSize="18sp"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
